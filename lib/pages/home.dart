@@ -1,6 +1,9 @@
 import 'package:ant_icons/ant_icons.dart';
+import 'package:corona_flutter/core/api.dart';
+import 'package:corona_flutter/pages/articles.dart';
 import 'package:corona_flutter/widgets/bottom_navigation_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -17,8 +20,10 @@ class _HomeState extends State<Home> {
         body: IndexedStack(
           index: _currentIndex,
           children: <Widget>[
-            Container(
-              color: Colors.teal,
+            Consumer<ApiProvider>(
+              builder: (context, repo, _) {
+                return Articles(remote: repo);
+              },
             ),
             Container(
               color: Colors.black,
