@@ -1,5 +1,6 @@
 import 'package:corona_flutter/core/api.dart';
 import 'package:corona_flutter/model/model.dart';
+import 'package:corona_flutter/widgets/items/article_snippet.dart';
 import 'package:flutter/material.dart';
 
 class Articles extends StatefulWidget {
@@ -23,6 +24,9 @@ class _ArticlesState extends State<Articles> {
     articles = widget.remote.fetchArticles();
   }
 
+  // todo:
+  void _openArticle() {}
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -33,25 +37,27 @@ class _ArticlesState extends State<Articles> {
             onRefresh: () {
               return widget.remote.fetchArticles();
             },
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
+            child: ListView.separated(
+              separatorBuilder: (context, index) {
+                return SizedBox(
+                  height: 12.0,
+                  child: Container(color: Colors.grey[200]),
+                );
+              },
+              physics: const AlwaysScrollableScrollPhysics(),
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
-                return Container(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    snapshot.data[index].title,
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black.withOpacity(0.75),
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                return ArticleSnippet(
+                  title: snapshot.data[index].title,
+                  timestamp: snapshot.data[index].publishedAt ?? '',
+                  imgUrl: snapshot.data[index].urlToImage ?? '',
+                  onTap: _openArticle,
                 );
               },
             ),
           );
         }
+        // Placeholder for error prompt
         return Container();
       },
     );
