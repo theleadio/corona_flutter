@@ -6,13 +6,15 @@ import 'package:intl/intl.dart';
 class ArticleSnippet extends StatelessWidget {
   final String title;
   final String timestamp;
+  final String url;
   final String imgUrl;
-  final VoidCallback onTap;
+  final void Function(String) onTap;
 
   const ArticleSnippet({
     Key key,
     this.title,
     this.timestamp,
+    this.url,
     this.imgUrl,
     this.onTap,
   }) : super(key: key);
@@ -20,7 +22,7 @@ class ArticleSnippet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: () => onTap(url),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 24.0,
