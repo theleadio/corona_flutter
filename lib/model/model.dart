@@ -6,8 +6,8 @@ import 'package:built_value/serializer.dart';
 
 part 'model.g.dart';
 
-abstract class Article implements Built<Article, ArticleBuilder> {
-  static Serializer<Article> get serializer => _$articleSerializer;
+abstract class News implements Built<News, NewsBuilder> {
+  static Serializer<News> get serializer => _$newsSerializer;
 
   int get nid;
   String get title;
@@ -25,6 +25,6 @@ abstract class Article implements Built<Article, ArticleBuilder> {
   @nullable
   String get addedOn;
 
-  factory Article([Function(ArticleBuilder) updates]) = _$Article;
-  Article._();
+  factory News([Function(NewsBuilder) updates]) = _$News;
+  News._();
 }

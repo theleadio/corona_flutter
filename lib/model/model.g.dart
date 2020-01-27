@@ -6,16 +6,16 @@ part of model;
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<Article> _$articleSerializer = new _$ArticleSerializer();
+Serializer<News> _$newsSerializer = new _$NewsSerializer();
 
-class _$ArticleSerializer implements StructuredSerializer<Article> {
+class _$NewsSerializer implements StructuredSerializer<News> {
   @override
-  final Iterable<Type> types = const [Article, _$Article];
+  final Iterable<Type> types = const [News, _$News];
   @override
-  final String wireName = 'Article';
+  final String wireName = 'News';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, Article object,
+  Iterable<Object> serialize(Serializers serializers, News object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'nid',
@@ -66,9 +66,9 @@ class _$ArticleSerializer implements StructuredSerializer<Article> {
   }
 
   @override
-  Article deserialize(Serializers serializers, Iterable<Object> serialized,
+  News deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ArticleBuilder();
+    final result = new NewsBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -119,7 +119,7 @@ class _$ArticleSerializer implements StructuredSerializer<Article> {
   }
 }
 
-class _$Article extends Article {
+class _$News extends News {
   @override
   final int nid;
   @override
@@ -139,10 +139,10 @@ class _$Article extends Article {
   @override
   final String addedOn;
 
-  factory _$Article([void Function(ArticleBuilder) updates]) =>
-      (new ArticleBuilder()..update(updates)).build();
+  factory _$News([void Function(NewsBuilder) updates]) =>
+      (new NewsBuilder()..update(updates)).build();
 
-  _$Article._(
+  _$News._(
       {this.nid,
       this.title,
       this.description,
@@ -154,27 +154,27 @@ class _$Article extends Article {
       this.addedOn})
       : super._() {
     if (nid == null) {
-      throw new BuiltValueNullFieldError('Article', 'nid');
+      throw new BuiltValueNullFieldError('News', 'nid');
     }
     if (title == null) {
-      throw new BuiltValueNullFieldError('Article', 'title');
+      throw new BuiltValueNullFieldError('News', 'title');
     }
     if (url == null) {
-      throw new BuiltValueNullFieldError('Article', 'url');
+      throw new BuiltValueNullFieldError('News', 'url');
     }
   }
 
   @override
-  Article rebuild(void Function(ArticleBuilder) updates) =>
+  News rebuild(void Function(NewsBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ArticleBuilder toBuilder() => new ArticleBuilder()..replace(this);
+  NewsBuilder toBuilder() => new NewsBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Article &&
+    return other is News &&
         nid == other.nid &&
         title == other.title &&
         description == other.description &&
@@ -206,7 +206,7 @@ class _$Article extends Article {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Article')
+    return (newBuiltValueToStringHelper('News')
           ..add('nid', nid)
           ..add('title', title)
           ..add('description', description)
@@ -220,8 +220,8 @@ class _$Article extends Article {
   }
 }
 
-class ArticleBuilder implements Builder<Article, ArticleBuilder> {
-  _$Article _$v;
+class NewsBuilder implements Builder<News, NewsBuilder> {
+  _$News _$v;
 
   int _nid;
   int get nid => _$this._nid;
@@ -259,9 +259,9 @@ class ArticleBuilder implements Builder<Article, ArticleBuilder> {
   String get addedOn => _$this._addedOn;
   set addedOn(String addedOn) => _$this._addedOn = addedOn;
 
-  ArticleBuilder();
+  NewsBuilder();
 
-  ArticleBuilder get _$this {
+  NewsBuilder get _$this {
     if (_$v != null) {
       _nid = _$v.nid;
       _title = _$v.title;
@@ -278,22 +278,22 @@ class ArticleBuilder implements Builder<Article, ArticleBuilder> {
   }
 
   @override
-  void replace(Article other) {
+  void replace(News other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$Article;
+    _$v = other as _$News;
   }
 
   @override
-  void update(void Function(ArticleBuilder) updates) {
+  void update(void Function(NewsBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$Article build() {
+  _$News build() {
     final _$result = _$v ??
-        new _$Article._(
+        new _$News._(
             nid: nid,
             title: title,
             description: description,

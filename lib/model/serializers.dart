@@ -8,7 +8,7 @@ import 'model.dart';
 part 'serializers.g.dart';
 
 @SerializersFor([
-  Article,
+  News,
 ])
 final Serializers serializers = _$serializers;
 

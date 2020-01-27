@@ -3,14 +3,14 @@ import 'package:corona_flutter/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class ArticleSnippet extends StatelessWidget {
+class NewsSnippet extends StatelessWidget {
   final String title;
   final String timestamp;
   final String url;
   final String imgUrl;
   final void Function(String) onTap;
 
-  const ArticleSnippet({
+  const NewsSnippet({
     Key key,
     this.title,
     this.timestamp,
@@ -54,6 +54,7 @@ class ArticleSnippet extends StatelessWidget {
                       timestamp != ''
                           ? Text(
                               DateFormat.yMMMEd()
+                                  .add_jm()
                                   .format(DateTime.parse(timestamp)),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
