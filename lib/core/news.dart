@@ -10,21 +10,23 @@ class NewsService with ChangeNotifier {
   NewsService({this.remote});
 
   List<News> _newsList = [];
-
   List<News> get news => _newsList;
-
   set news(List<News> updatedNews) {
     _newsList = updatedNews;
+    state = NewsFeedState.idle;
     notifyListeners();
   }
+
+  NewsFeedState state = NewsFeedState.idle;
 
   fetch({
     int offset = 0,
     NewsFeedType feedType,
   }) async {
+    state = NewsFeedState.loading;
     List<News> newsData = await remote.fetchNews(
       offset: offset,
-      feed: feedType,
+      feedType: feedType,
     );
     news += newsData;
   }

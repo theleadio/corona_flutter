@@ -99,7 +99,7 @@ class _NewsPageState extends State<NewsPage> {
         return [
           SliverAppBar(
             title: Text(
-              'News',
+              '${feedType == NewsFeedType.latest ? 'Latest' : 'Trending'} News',
               style: TextStyle(
                 fontSize: 28.0,
                 color: Colors.black.withOpacity(0.75),
@@ -107,12 +107,32 @@ class _NewsPageState extends State<NewsPage> {
               ),
             ),
             actions: <Widget>[
-              IconButton(
+              PopupMenuButton<NewsFeedType>(
+                offset: Offset(0.0, 8.0),
                 icon: Icon(
                   AntIcons.sliders_outline,
                   color: Colors.black.withOpacity(0.75),
                 ),
-                onPressed: () {},
+                onSelected: (type) {
+                  if (type == feedType) return;
+
+                  setState(() {
+                    page = 0;
+                    widget.newsService.clear();
+                    feedType = type;
+                    loadArticles();
+                  });
+                },
+                itemBuilder: (context) => <PopupMenuEntry<NewsFeedType>>[
+                  PopupMenuItem<NewsFeedType>(
+                    value: NewsFeedType.trending,
+                    child: Text('Trending'),
+                  ),
+                  PopupMenuItem<NewsFeedType>(
+                    value: NewsFeedType.latest,
+                    child: Text('Latest'),
+                  )
+                ],
               ),
             ],
             elevation: 0.0,
@@ -127,6 +147,7 @@ class _NewsPageState extends State<NewsPage> {
           news: widget.newsService.news,
           controller: newsFeedController,
           onTapNews: openArticle,
+          state: widget.newsService.state,
         ),
       ),
     );
@@ -137,27 +158,44 @@ class NewsFeed extends StatelessWidget {
   final List<News> news;
   final Function(String) onTapNews;
   final ScrollController controller;
+  final NewsFeedState state;
 
   NewsFeed({
     Key key,
     this.news,
     this.onTapNews,
     this.controller,
+    this.state,
   }) : super(key: key);
+
+  bool get isLoading => state == NewsFeedState.loading;
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemCount: news.length,
+      itemCount: isLoading ? news.length + 1 : news.length,
       physics: const AlwaysScrollableScrollPhysics(),
       controller: controller,
       separatorBuilder: (context, index) {
+        if (isLoading && index >= news.length - 1) {
+          return Container();
+        }
+
         return SizedBox(
           height: 12.0,
           child: Container(color: Colors.grey[200]),
         );
       },
       itemBuilder: (context, index) {
+        if (isLoading && index == news.length) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+
         return NewsSnippet(
           title: news[index].title,
           timestamp: news[index].publishedAt ?? '',
