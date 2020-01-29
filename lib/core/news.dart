@@ -1,4 +1,5 @@
 import 'package:corona_flutter/core/api.dart';
+import 'package:corona_flutter/core/settings.dart';
 import 'package:corona_flutter/model/model.dart';
 import 'package:flutter/widgets.dart';
 
@@ -6,8 +7,14 @@ enum NewsFeedState { idle, loading }
 
 class NewsService with ChangeNotifier {
   final ApiProvider remote;
+  final Settings settings;
 
-  NewsService({this.remote});
+  NewsService({
+    this.remote,
+    this.settings,
+  }) {
+    settings.addListener(refresh);
+  }
 
   List<News> _newsList = [];
   List<News> get news => _newsList;
@@ -29,12 +36,14 @@ class NewsService with ChangeNotifier {
 
   fetch({
     int offset = 0,
-    NewsFeedType feedType,
+    NewsFeedType feedType = NewsFeedType.latest,
   }) async {
     state = NewsFeedState.loading;
+
     List<News> newsData = await remote.fetchNews(
       offset: offset,
       feedType: feedType,
+      country: settings.country ?? '',
     );
     news += newsData;
   }
@@ -59,8 +68,14 @@ class NewsService with ChangeNotifier {
     searchResults.clear();
   }
 
+  refresh() {
+    clearNews();
+    fetch();
+  }
+
   @override
   void dispose() {
+    settings.removeListener(refresh);
     super.dispose();
   }
 }

@@ -26,10 +26,11 @@ dependencies:
   flutter_custom_tabs: ^0.6.0
   http: ^0.12.0+4
   intl: ^0.16.1
+  flag: ^1.0.2
   built_collection: ^4.3.2
   built_value: ^7.0.8
   provider: ^4.0.2
-  rxdart: ^0.23.1
+  shared_preferences: ^0.5.6+1
   share: ^0.6.3+5
 
 dev_dependencies:

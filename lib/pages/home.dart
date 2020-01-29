@@ -1,5 +1,7 @@
 import 'package:ant_icons/ant_icons.dart';
 import 'package:corona_flutter/core/news.dart';
+import 'package:corona_flutter/core/stat.dart';
+import 'package:corona_flutter/pages/explore_page.dart';
 import 'package:corona_flutter/pages/news_page.dart';
 import 'package:corona_flutter/widgets/bottom_navigation_view.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +29,12 @@ class _HomeState extends State<Home> {
                 );
               },
             ),
-            Container(
-              color: Colors.black,
+            Consumer<StatsService>(
+              builder: (context, statsService, _) {
+                return ExplorePage(
+                  statsService: statsService,
+                );
+              },
             ),
             Container(
               color: Colors.amber,

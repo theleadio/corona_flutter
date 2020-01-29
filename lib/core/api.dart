@@ -6,8 +6,10 @@ import 'package:corona_flutter/model/serializers.dart';
 import 'package:http/http.dart' show Client;
 
 abstract class ApiProvider {
-  Future<List<News>> fetchNews({int offset, NewsFeedType feedType});
+  Future<List<News>> fetchNews(
+      {int offset, NewsFeedType feedType, String country});
   Future<List<News>> searchNews({String query, int offset});
+  Future<StatsCounter> getStats({String country});
 }
 
 enum NewsFeedType { trending, latest }
@@ -19,12 +21,20 @@ class RemoteRepository extends ApiProvider {
   Future<List<News>> fetchNews({
     int offset = 0,
     NewsFeedType feedType = NewsFeedType.trending,
+    String country = '',
   }) async {
+    Map<String, String> query = {
+      "offset": offset.toString(),
+      "country": country,
+    };
+    if (country.length <= 0) {
+      query.remove("country");
+    }
+
     var endpoint;
     switch (feedType) {
       case NewsFeedType.trending:
-        endpoint = Uri.https(
-            _baseUrl, "/news/trending", {"offset": offset.toString()});
+        endpoint = Uri.https(_baseUrl, "/news/trending", query);
 
         final response = await client.get(endpoint);
 
@@ -39,8 +49,8 @@ class RemoteRepository extends ApiProvider {
         }
         break;
       case NewsFeedType.latest:
-        endpoint = Uri.https(_baseUrl, "/news",
-            {"offset": offset.toString(), "sort": "-publishedAt"});
+        query["sort"] = "-publisedAt";
+        endpoint = Uri.https(_baseUrl, "/news", query);
 
         final response = await client.get(endpoint);
 
@@ -68,6 +78,27 @@ class RemoteRepository extends ApiProvider {
     if (response.statusCode == 200) {
       final Iterable articlesData = json.decode(response.body);
       return articlesData.map((data) => deserialize<News>(data)).toList();
+    } else {
+      return null;
+    }
+  }
+
+  Future<StatsCounter> getStats({
+    String country = '',
+  }) async {
+    Map<String, String> query = {};
+    if (country.length > 0) {
+      query = {
+        "country": country,
+      };
+    }
+
+    var endpoint = Uri.https(_baseUrl, "/stats", query);
+    final response = await client.get(endpoint);
+
+    if (response.statusCode == 200) {
+      final statsData = json.decode(response.body);
+      return deserialize<StatsCounter>(statsData);
     } else {
       return null;
     }

@@ -3,10 +3,9 @@ import 'dart:async';
 import 'package:ant_icons/ant_icons.dart';
 import 'package:corona_flutter/core/api.dart';
 import 'package:corona_flutter/core/news.dart';
-import 'package:corona_flutter/core/search.dart';
+import 'package:corona_flutter/pages/search.dart';
 import 'package:corona_flutter/model/model.dart';
 import 'package:corona_flutter/pages/news_detail_page.dart';
-import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/items/news_snippet.dart';
 import 'package:flutter/material.dart';
 
