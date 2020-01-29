@@ -1,17 +1,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:corona_flutter/utils/constants.dart';
+import 'package:corona_flutter/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class NewsSnippet extends StatelessWidget {
+  final int nid;
   final String title;
   final String timestamp;
   final String url;
   final String imgUrl;
-  final void Function(String) onTap;
+  final void Function(int) onTap;
 
   const NewsSnippet({
     Key key,
+    this.nid,
     this.title,
     this.timestamp,
     this.url,
@@ -22,7 +25,7 @@ class NewsSnippet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => onTap(url),
+      onTap: () => onTap(nid),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 24.0,
@@ -53,9 +56,7 @@ class NewsSnippet extends StatelessWidget {
                       const SizedBox(height: 8.0),
                       timestamp != ''
                           ? Text(
-                              DateFormat.yMMMEd()
-                                  .add_jm()
-                                  .format(DateTime.parse(timestamp)),
+                              Helper.formatDate(timestamp),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(

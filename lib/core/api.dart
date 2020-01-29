@@ -59,7 +59,10 @@ class RemoteRepository extends ApiProvider {
     String query,
     int offset = 0,
   }) async {
-    var endpoint = Uri.https(_baseUrl, "/news", {"q": query});
+    var endpoint = Uri.https(_baseUrl, "/news", {
+      "q": query,
+      "offset": offset.toString(),
+    });
     final response = await client.get(endpoint);
 
     if (response.statusCode == 200) {

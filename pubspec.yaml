@@ -30,6 +30,7 @@ dependencies:
   built_value: ^7.0.8
   provider: ^4.0.2
   rxdart: ^0.23.1
+  share: ^0.6.3+5
 
 dev_dependencies:
   build_runner: ^1.7.3
@@ -65,3 +66,6 @@ flutter:
           weight: 500
         - asset: assets/fonts/HKGrotesk-Bold.ttf
           weight: 700
+    - family: AbrilFatface
+      fonts:
+        - asset: assets/fonts/AbrilFatface-Regular.ttf

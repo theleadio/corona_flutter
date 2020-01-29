@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:ant_icons/ant_icons.dart';
 import 'package:corona_flutter/core/api.dart';
 import 'package:corona_flutter/core/news.dart';
+import 'package:corona_flutter/core/search.dart';
 import 'package:corona_flutter/model/model.dart';
+import 'package:corona_flutter/pages/news_detail_page.dart';
+import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/items/news_snippet.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 
 class NewsPage extends StatefulWidget {
   final NewsService newsService;
@@ -63,32 +65,24 @@ class _NewsPageState extends State<NewsPage> {
 
   Future<void> handleRefresh() async {
     setState(() {
-      widget.newsService.clear();
+      widget.newsService.clearNews();
       page = 0;
       loadArticles();
     });
     return;
   }
 
-  void openArticle(String url) async {
-    try {
-      await launch(
-        url,
-        option: CustomTabsOption(
-          toolbarColor: Theme.of(context).primaryColor,
-          enableDefaultShare: true,
-          enableUrlBarHiding: true,
-          showPageTitle: true,
-          animation: CustomTabsAnimation.slideIn(),
-          extraCustomTabs: <String>[
-            'org.mozilla.firefox',
-            'com.microsoft.emmx',
-          ],
+  onTap(int nid) {
+    News selectedNews =
+        widget.newsService.news.firstWhere((news) => news.nid == nid);
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => NewsDetailPage(
+          news: selectedNews,
         ),
-      );
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+      ),
+    );
   }
 
   @override
@@ -101,12 +95,25 @@ class _NewsPageState extends State<NewsPage> {
             title: Text(
               '${feedType == NewsFeedType.latest ? 'Latest' : 'Trending'} News',
               style: TextStyle(
-                fontSize: 28.0,
+                fontSize: 26.0,
+                fontFamily: 'AbrilFatface',
                 color: Colors.black.withOpacity(0.75),
                 fontWeight: FontWeight.w700,
               ),
             ),
             actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  AntIcons.search_outline,
+                  color: Colors.black.withOpacity(0.75),
+                ),
+                onPressed: () {
+                  showSearch(
+                    context: context,
+                    delegate: NewsSearch(),
+                  );
+                },
+              ),
               PopupMenuButton<NewsFeedType>(
                 offset: Offset(0.0, 8.0),
                 icon: Icon(
@@ -118,7 +125,7 @@ class _NewsPageState extends State<NewsPage> {
 
                   setState(() {
                     page = 0;
-                    widget.newsService.clear();
+                    widget.newsService.clearNews();
                     feedType = type;
                     loadArticles();
                   });
@@ -146,7 +153,7 @@ class _NewsPageState extends State<NewsPage> {
           key: PageStorageKey('newsFeed'),
           news: widget.newsService.news,
           controller: newsFeedController,
-          onTapNews: openArticle,
+          onTap: onTap,
           state: widget.newsService.state,
         ),
       ),
@@ -156,14 +163,14 @@ class _NewsPageState extends State<NewsPage> {
 
 class NewsFeed extends StatelessWidget {
   final List<News> news;
-  final Function(String) onTapNews;
+  final Function(int) onTap;
   final ScrollController controller;
   final NewsFeedState state;
 
   NewsFeed({
     Key key,
     this.news,
-    this.onTapNews,
+    this.onTap,
     this.controller,
     this.state,
   }) : super(key: key);
@@ -172,12 +179,18 @@ class NewsFeed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (news.length == 0) {
+      return Center(
+        child: Text('No result'),
+      );
+    }
+
     return ListView.separated(
       itemCount: isLoading ? news.length + 1 : news.length,
       physics: const AlwaysScrollableScrollPhysics(),
       controller: controller,
       separatorBuilder: (context, index) {
-        if (isLoading && index >= news.length - 1) {
+        if (isLoading && index == news.length) {
           return Container();
         }
 
@@ -197,11 +210,12 @@ class NewsFeed extends StatelessWidget {
         }
 
         return NewsSnippet(
+          nid: news[index].nid,
           title: news[index].title,
           timestamp: news[index].publishedAt ?? '',
           url: news[index].url,
           imgUrl: news[index].urlToImage ?? '',
-          onTap: onTapNews,
+          onTap: onTap,
         );
       },
     );

@@ -11,8 +11,16 @@ class NewsService with ChangeNotifier {
 
   List<News> _newsList = [];
   List<News> get news => _newsList;
-  set news(List<News> updatedNews) {
-    _newsList = updatedNews;
+  set news(List<News> value) {
+    _newsList = value;
+    state = NewsFeedState.idle;
+    notifyListeners();
+  }
+
+  List<News> _searchResults = [];
+  List<News> get searchResults => _searchResults;
+  set searchResults(List<News> value) {
+    _searchResults = value;
     state = NewsFeedState.idle;
     notifyListeners();
   }
@@ -31,8 +39,24 @@ class NewsService with ChangeNotifier {
     news += newsData;
   }
 
-  clear() {
+  clearNews() {
     news.clear();
+  }
+
+  search({
+    int offset = 0,
+    String query = '',
+  }) async {
+    state = NewsFeedState.loading;
+    List<News> newsData = await remote.searchNews(
+      offset: offset,
+      query: query,
+    );
+    searchResults += newsData;
+  }
+
+  clearSearchResults() {
+    searchResults.clear();
   }
 
   @override

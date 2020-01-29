@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
         ),
         bottomNavigationBar: BottomNavigationView(
           currentIndex: _currentIndex,
-          activeColor: Colors.blue,
+          activeColor: Colors.teal,
           items: [
             BottomNavigationItem(
               icon: Icon(AntIcons.profile_outline),
