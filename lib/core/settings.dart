@@ -4,6 +4,17 @@ import 'package:corona_flutter/utils/helper.dart';
 import 'package:flutter/widgets.dart';
 
 class Settings with ChangeNotifier {
+  Settings() {
+    init();
+  }
+
+  init() async {
+    _feedType = Helper.mapStringToNewsFeedTypeEnum(
+            await Helper.getUserPref(AppConstants.sprefNewsFeedType)) ??
+        NewsFeedType.latest;
+    _country = await Helper.getUserPref(AppConstants.sprefCountry) ?? '';
+  }
+
   NewsFeedType _feedType;
   NewsFeedType get feedType => _feedType;
   set feedType(NewsFeedType value) {
@@ -23,15 +34,5 @@ class Settings with ChangeNotifier {
     _country = value;
     Helper.updateUserPref(AppConstants.sprefCountry, _country);
     notifyListeners();
-  }
-
-  Settings() {
-    init();
-  }
-
-  init() async {
-    _feedType = Helper.mapStringToNewsFeedEnum(
-        await Helper.getUserPref(AppConstants.sprefNewsFeedType));
-    _country = await Helper.getUserPref(AppConstants.sprefCountry);
   }
 }

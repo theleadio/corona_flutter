@@ -18,8 +18,8 @@ class CoronaTrackerApp extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<Settings>(
-          create: (_) => settings,
+        ChangeNotifierProvider<Settings>.value(
+          value: settings,
         ),
         ChangeNotifierProvider<NewsService>(
           create: (_) => NewsService(

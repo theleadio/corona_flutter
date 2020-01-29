@@ -49,7 +49,7 @@ class RemoteRepository extends ApiProvider {
         }
         break;
       case NewsFeedType.latest:
-        query["sort"] = "-publisedAt";
+        query["sort"] = "-publishedAt";
         endpoint = Uri.https(_baseUrl, "/news", query);
 
         final response = await client.get(endpoint);

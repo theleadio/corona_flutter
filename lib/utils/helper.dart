@@ -36,19 +36,19 @@ class Helper {
   static String mapNewsFeedTypeEnumToString(NewsFeedType feedType) {
     switch (feedType) {
       case NewsFeedType.trending:
-        return NewsFeedType.trending.toString();
+        return 'Trending';
       case NewsFeedType.latest:
-        return NewsFeedType.latest.toString();
+        return 'Latest';
       default:
         return '';
     }
   }
 
-  static NewsFeedType mapStringToNewsFeedEnum(String value) {
-    if (value == NewsFeedType.latest.toString()) {
-      return NewsFeedType.latest;
-    } else {
+  static NewsFeedType mapStringToNewsFeedTypeEnum(String value) {
+    if (value == 'Trending') {
       return NewsFeedType.trending;
+    } else {
+      return NewsFeedType.latest;
     }
   }
 

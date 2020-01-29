@@ -1,6 +1,7 @@
 import 'package:corona_flutter/core/api.dart';
 import 'package:corona_flutter/core/settings.dart';
 import 'package:corona_flutter/model/model.dart';
+import 'package:corona_flutter/utils/helper.dart';
 import 'package:flutter/widgets.dart';
 
 enum NewsFeedState { idle, loading }
@@ -32,17 +33,18 @@ class NewsService with ChangeNotifier {
     notifyListeners();
   }
 
+  NewsFeedType get feedType => settings.feedType;
+
   NewsFeedState state = NewsFeedState.idle;
 
   fetch({
     int offset = 0,
-    NewsFeedType feedType = NewsFeedType.latest,
   }) async {
     state = NewsFeedState.loading;
 
     List<News> newsData = await remote.fetchNews(
       offset: offset,
-      feedType: feedType,
+      feedType: settings.feedType ?? NewsFeedType.latest,
       country: settings.country ?? '',
     );
     news += newsData;

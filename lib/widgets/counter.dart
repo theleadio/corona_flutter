@@ -24,7 +24,22 @@ class _CounterState extends ImplicitlyAnimatedWidgetState<Counter> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(_counter.evaluate(animation).toString());
+    return Container(
+      color: Colors.teal,
+      padding: const EdgeInsets.only(
+        left: 24.0,
+        right: 24.0,
+        top: 8.0,
+      ),
+      child: Text(
+        _counter.evaluate(animation).toString(),
+        style: TextStyle(
+          fontSize: 88.0,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
+        ),
+      ),
+    );
   }
 
   @override

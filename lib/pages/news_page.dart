@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:ant_icons/ant_icons.dart';
 import 'package:corona_flutter/core/api.dart';
 import 'package:corona_flutter/core/news.dart';
-import 'package:corona_flutter/pages/search.dart';
+import 'package:corona_flutter/widgets/search_delegate.dart';
 import 'package:corona_flutter/model/model.dart';
 import 'package:corona_flutter/pages/news_detail_page.dart';
 import 'package:corona_flutter/widgets/items/news_snippet.dart';
@@ -25,7 +25,7 @@ class _NewsPageState extends State<NewsPage> {
   ScrollController newsFeedController;
   ScrollController appBarController;
   int page = 0;
-  NewsFeedType feedType = NewsFeedType.trending;
+  List<News> news = [];
 
   @override
   void initState() {
@@ -59,7 +59,7 @@ class _NewsPageState extends State<NewsPage> {
   }
 
   loadArticles() {
-    widget.newsService.fetch(offset: page * 10, feedType: feedType);
+    widget.newsService.fetch(offset: page * 10);
   }
 
   Future<void> handleRefresh() async {
@@ -86,59 +86,47 @@ class _NewsPageState extends State<NewsPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.newsService.news.length < news.length) {
+      page = 0;
+    }
+    news = widget.newsService.news;
+
     return NestedScrollView(
       controller: appBarController,
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
           SliverAppBar(
+            centerTitle: true,
             title: Text(
-              '${feedType == NewsFeedType.latest ? 'Latest' : 'Trending'} News',
+              '${widget.newsService.feedType == NewsFeedType.latest ? 'Latest' : 'Trending'} News',
               style: TextStyle(
-                fontSize: 26.0,
+                fontSize: 24.0,
                 fontFamily: 'AbrilFatface',
                 color: Colors.black.withOpacity(0.75),
                 fontWeight: FontWeight.w700,
               ),
             ),
+            leading: IconButton(
+              icon: Icon(
+                AntIcons.search_outline,
+                color: Colors.black.withOpacity(0.75),
+              ),
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: NewsSearchDelegate(),
+                );
+              },
+            ),
             actions: <Widget>[
               IconButton(
                 icon: Icon(
-                  AntIcons.search_outline,
+                  AntIcons.global,
                   color: Colors.black.withOpacity(0.75),
                 ),
                 onPressed: () {
-                  showSearch(
-                    context: context,
-                    delegate: NewsSearch(),
-                  );
+                  Scaffold.of(context).openEndDrawer();
                 },
-              ),
-              PopupMenuButton<NewsFeedType>(
-                offset: Offset(0.0, 8.0),
-                icon: Icon(
-                  AntIcons.sliders_outline,
-                  color: Colors.black.withOpacity(0.75),
-                ),
-                onSelected: (type) {
-                  if (type == feedType) return;
-
-                  setState(() {
-                    page = 0;
-                    widget.newsService.clearNews();
-                    feedType = type;
-                    loadArticles();
-                  });
-                },
-                itemBuilder: (context) => <PopupMenuEntry<NewsFeedType>>[
-                  PopupMenuItem<NewsFeedType>(
-                    value: NewsFeedType.trending,
-                    child: Text('Trending'),
-                  ),
-                  PopupMenuItem<NewsFeedType>(
-                    value: NewsFeedType.latest,
-                    child: Text('Latest'),
-                  )
-                ],
               ),
             ],
             elevation: 0.0,
@@ -150,7 +138,7 @@ class _NewsPageState extends State<NewsPage> {
         onRefresh: handleRefresh,
         child: NewsFeed(
           key: PageStorageKey('newsFeed'),
-          news: widget.newsService.news,
+          news: news,
           controller: newsFeedController,
           onTap: onTap,
           state: widget.newsService.state,

@@ -1,4 +1,4 @@
-import 'package:corona_flutter/core/news.dart';
+import 'package:ant_icons/ant_icons.dart';
 import 'package:corona_flutter/core/stat.dart';
 import 'package:corona_flutter/widgets/counter.dart';
 import 'package:flutter/material.dart';
@@ -60,16 +60,27 @@ class _ExplorePageState extends State<ExplorePage> {
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
           SliverAppBar(
+            centerTitle: true,
             title: Text(
               'Statistics',
               style: TextStyle(
-                fontSize: 26.0,
+                fontSize: 24.0,
                 fontFamily: 'AbrilFatface',
                 color: Colors.black.withOpacity(0.75),
                 fontWeight: FontWeight.w700,
               ),
             ),
-            actions: <Widget>[],
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  AntIcons.global,
+                  color: Colors.black.withOpacity(0.75),
+                ),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              ),
+            ],
             elevation: 0.0,
             backgroundColor: Colors.white24,
           ),
@@ -80,17 +91,69 @@ class _ExplorePageState extends State<ExplorePage> {
         child: ListView(
           key: PageStorageKey('statsCounter'),
           children: <Widget>[
-            Counter(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Text(
+                'World',
+                style: TextStyle(
+                  fontSize: 60.0,
+                  fontFamily: 'AbrilFatface',
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black.withOpacity(0.75),
+                ),
+              ),
+            ),
+            CounterWrapper(
+              title: 'Number Confirmed',
               number: widget.statsService.stats?.numConfirm ?? 0,
             ),
-            Counter(
+            CounterWrapper(
+              title: 'Number Dead',
               number: widget.statsService.stats?.numDead ?? 0,
             ),
-            Counter(
+            CounterWrapper(
+              title: 'Number Healed',
               number: widget.statsService.stats?.numHeal ?? 0,
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CounterWrapper extends StatelessWidget {
+  final String title;
+  final int number;
+
+  const CounterWrapper({
+    Key key,
+    this.title,
+    this.number,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 24.0,
+        vertical: 12.0,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 22.0,
+              fontWeight: FontWeight.w700,
+              color: Colors.black.withOpacity(0.75),
+            ),
+          ),
+          Counter(
+            number: number,
+          ),
+        ],
       ),
     );
   }

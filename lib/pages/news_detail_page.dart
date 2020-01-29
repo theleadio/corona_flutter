@@ -125,7 +125,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       ),
                     ),
                     Text(
-                      widget.news.description,
+                      widget.news.description ?? '',
                       style: TextStyle(
                         fontSize: 18.0,
                         color: Colors.black54,
@@ -142,7 +142,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       ),
                     ),
                     Text(
-                      widget.news.content,
+                      widget.news.content ?? '',
                       textAlign: TextAlign.justify,
                       style: TextStyle(
                         fontSize: 16.0,

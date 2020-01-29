@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:provider/provider.dart';
 
-class NewsSearch extends SearchDelegate<News> {
+class NewsSearchDelegate extends SearchDelegate<News> {
   @override
   ThemeData appBarTheme(BuildContext context) {
     assert(context != null);
