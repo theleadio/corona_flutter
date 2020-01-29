@@ -62,7 +62,7 @@ class _SearchPageState extends State<SearchPage> {
 
   onTap(int nid) {
     News selectedNews =
-        widget.newsService.news.firstWhere((news) => news.nid == nid);
+        widget.newsService.searchResults.firstWhere((news) => news.nid == nid);
 
     Navigator.of(context).push(
       MaterialPageRoute(
