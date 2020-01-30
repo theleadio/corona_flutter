@@ -104,6 +104,64 @@ class _HomeState extends State<Home> {
                       settings.countryCode = value;
                     },
                   ),
+                  SizedBox(
+                    height: 36.0,
+                    child: Center(
+                      child: Container(
+                        height: 1.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    highlightColor: Colors.transparent,
+                    radius: 120.0,
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Helper.openWebUrl(
+                        context: context,
+                        url: AppConstants.coronaTrackerWebUrl,
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 24.0,
+                        top: 8.0,
+                        bottom: 8.0,
+                      ),
+                      child: Text(
+                        'Website',
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.75),
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    highlightColor: Colors.transparent,
+                    radius: 120.0,
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pushNamed('/about');
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 24.0,
+                        top: 8.0,
+                        bottom: 8.0,
+                      ),
+                      child: Text(
+                        'About',
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.75),
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             );

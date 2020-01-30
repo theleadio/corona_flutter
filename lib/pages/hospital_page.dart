@@ -263,11 +263,11 @@ class HospitalSnippet extends StatelessWidget {
                             color: Colors.teal,
                           ),
                           onPressed: () {
-                            Helper.openArticle(context: context, url: webUrl);
+                            Helper.openWebUrl(context: context, url: webUrl);
                           },
                         )
                 ],
-              )
+              ),
             ],
           ),
         ),

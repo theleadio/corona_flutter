@@ -60,6 +60,10 @@ flutter:
 
   assets:
     - assets/img/img_placeholder.png
+    - assets/img/laucherhan.webp
+    - assets/img/hafeezn.webp
+    - assets/img/shian.webp
+    - assets/img/tanweiseng.webp
 
   fonts:
     - family: HKGrotesk

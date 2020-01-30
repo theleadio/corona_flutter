@@ -155,7 +155,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       child: FlatButton(
                         color: Colors.teal,
                         onPressed: () {
-                          Helper.openArticle(
+                          Helper.openWebUrl(
                             context: context,
                             url: widget.news.url,
                           );

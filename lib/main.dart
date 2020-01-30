@@ -3,6 +3,7 @@ import 'package:corona_flutter/core/hospital.dart';
 import 'package:corona_flutter/core/news.dart';
 import 'package:corona_flutter/core/settings.dart';
 import 'package:corona_flutter/core/stat.dart';
+import 'package:corona_flutter/pages/about_page.dart';
 import 'package:corona_flutter/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -52,6 +53,9 @@ class CoronaTrackerApp extends StatelessWidget {
         routes: {
           '/': (context) {
             return Home();
+          },
+          '/about': (context) {
+            return AboutPage();
           },
         },
       ),

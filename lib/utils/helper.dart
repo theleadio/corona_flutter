@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Helper {
-  static void openArticle({
+  static void openWebUrl({
     String url,
     BuildContext context,
   }) async {
@@ -17,13 +17,15 @@ class Helper {
       await CustomTabs.launch(
         url,
         option: CustomTabs.CustomTabsOption(
-          toolbarColor: Theme.of(context).primaryColor,
+          toolbarColor: Colors.teal,
           enableDefaultShare: true,
           enableUrlBarHiding: true,
           showPageTitle: true,
-          animation: CustomTabs.CustomTabsAnimation.slideIn(),
+          enableInstantApps: true,
           extraCustomTabs: <String>[
+            // ref. https://play.google.com/store/apps/details?id=org.mozilla.firefox
             'org.mozilla.firefox',
+            // ref. https://play.google.com/store/apps/details?id=com.microsoft.emmx
             'com.microsoft.emmx',
           ],
         ),
