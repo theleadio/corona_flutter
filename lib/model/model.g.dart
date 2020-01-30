@@ -249,13 +249,13 @@ class _$HospitalSerializer implements StructuredSerializer<Hospital> {
       result
         ..add('lat')
         ..add(serializers.serialize(object.lat,
-            specifiedType: const FullType(double)));
+            specifiedType: const FullType(String)));
     }
     if (object.long != null) {
       result
         ..add('long')
         ..add(serializers.serialize(object.long,
-            specifiedType: const FullType(double)));
+            specifiedType: const FullType(String)));
     }
     if (object.addedBy != null) {
       result
@@ -323,11 +323,11 @@ class _$HospitalSerializer implements StructuredSerializer<Hospital> {
           break;
         case 'lat':
           result.lat = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'long':
           result.long = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'addedBy':
           result.addedBy = serializers.deserialize(value,
@@ -719,9 +719,9 @@ class _$Hospital extends Hospital {
   @override
   final String telNo;
   @override
-  final double lat;
+  final String lat;
   @override
-  final double long;
+  final String long;
   @override
   final String addedBy;
   @override
@@ -882,13 +882,13 @@ class HospitalBuilder implements Builder<Hospital, HospitalBuilder> {
   String get telNo => _$this._telNo;
   set telNo(String telNo) => _$this._telNo = telNo;
 
-  double _lat;
-  double get lat => _$this._lat;
-  set lat(double lat) => _$this._lat = lat;
+  String _lat;
+  String get lat => _$this._lat;
+  set lat(String lat) => _$this._lat = lat;
 
-  double _long;
-  double get long => _$this._long;
-  set long(double long) => _$this._long = long;
+  String _long;
+  String get long => _$this._long;
+  set long(String long) => _$this._long = long;
 
   String _addedBy;
   String get addedBy => _$this._addedBy;

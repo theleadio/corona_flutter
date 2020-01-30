@@ -33,7 +33,6 @@ class StatsService with ChangeNotifier {
   }
 
   getStats() async {
-    print('refresh Stats ::: ${settings.countryCode ?? 'GLOBAL'}');
     StatsCounter updatedStats = await remote.getStats(
       countryCode: settings.countryCode ?? 'GLOBAL',
     );

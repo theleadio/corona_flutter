@@ -69,9 +69,9 @@ abstract class Hospital implements Built<Hospital, HospitalBuilder> {
   String get country;
   String get telNo;
   @nullable
-  double get lat;
+  String get lat;
   @nullable
-  double get long;
+  String get long;
   @nullable
   String get addedBy;
   @nullable

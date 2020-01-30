@@ -1,4 +1,5 @@
 import 'package:corona_flutter/core/api.dart';
+import 'package:corona_flutter/core/hospital.dart';
 import 'package:corona_flutter/core/news.dart';
 import 'package:corona_flutter/core/settings.dart';
 import 'package:corona_flutter/core/stat.dart';
@@ -29,6 +30,12 @@ class CoronaTrackerApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<StatsService>(
           create: (_) => StatsService(
+            remote: remoteRepo,
+            settings: settings,
+          ),
+        ),
+        ChangeNotifierProvider<HospitalsService>(
+          create: (_) => HospitalsService(
             remote: remoteRepo,
             settings: settings,
           ),

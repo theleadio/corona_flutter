@@ -3,9 +3,10 @@ import 'package:corona_flutter/core/api.dart';
 import 'package:corona_flutter/utils/constants.dart';
 import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as CustomTabs;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Helper {
   static void openArticle({
@@ -13,20 +14,32 @@ class Helper {
     BuildContext context,
   }) async {
     try {
-      await launch(
+      await CustomTabs.launch(
         url,
-        option: CustomTabsOption(
+        option: CustomTabs.CustomTabsOption(
           toolbarColor: Theme.of(context).primaryColor,
           enableDefaultShare: true,
           enableUrlBarHiding: true,
           showPageTitle: true,
-          animation: CustomTabsAnimation.slideIn(),
+          animation: CustomTabs.CustomTabsAnimation.slideIn(),
           extraCustomTabs: <String>[
             'org.mozilla.firefox',
             'com.microsoft.emmx',
           ],
         ),
       );
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  static void openTelNum(String telNum) async {
+    try {
+      if (await canLaunch('tel:$telNum')) {
+        await launch(
+          'tel:$telNum',
+        );
+      }
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -84,7 +97,6 @@ class Helper {
 
   static String getCountryName(String countryCode) {
     assert(countryCode != null);
-    print('getCountryName::: $countryCode');
 
     try {
       String countryName = AppConstants.countriesList

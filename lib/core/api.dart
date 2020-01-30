@@ -11,6 +11,7 @@ abstract class ApiProvider {
       {int offset, NewsFeedType feedType, String countryCode});
   Future<List<News>> searchNews({String query, int offset});
   Future<StatsCounter> getStats({String countryCode});
+  Future<List<Hospital>> getHospitals();
 }
 
 enum NewsFeedType { trending, latest }
@@ -106,6 +107,24 @@ class RemoteRepository extends ApiProvider {
       }
     } else {
       return null;
+    }
+  }
+
+  Future<List<Hospital>> getHospitals() async {
+    var endpoint = Uri.https(
+      "v2-api.sheety.co",
+      "/3d29e508008ed3f47cc52f6aaf321f51/coronaInfo/hospitalsAndHealthcareProviders",
+    );
+    final response = await client.get(endpoint);
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> hospitalDataMap = json.decode(response.body);
+      final Iterable hospitalData =
+          hospitalDataMap['hospitalsAndHealthcareProviders'];
+
+      return hospitalData.map((data) => deserialize<Hospital>(data)).toList();
+    } else {
+      return [];
     }
   }
 }

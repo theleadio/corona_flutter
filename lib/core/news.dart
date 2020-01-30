@@ -67,7 +67,6 @@ class NewsService with ChangeNotifier {
   }
 
   refresh() {
-    print('refresh News ::: ${settings.countryCode ?? 'GLOBAL'}');
     page = 0;
     news.clear();
     fetch();
