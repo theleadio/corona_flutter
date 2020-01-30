@@ -1,13 +1,11 @@
-import 'package:corona_flutter/core/api.dart';
 import 'package:corona_flutter/core/news.dart';
 import 'package:corona_flutter/model/model.dart';
-import 'package:corona_flutter/pages/news_page.dart';
 import 'package:corona_flutter/pages/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:provider/provider.dart';
 
-class NewsSearch extends SearchDelegate<News> {
+class NewsSearchDelegate extends SearchDelegate<News> {
   @override
   ThemeData appBarTheme(BuildContext context) {
     assert(context != null);

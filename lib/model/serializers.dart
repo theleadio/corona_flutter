@@ -9,6 +9,8 @@ part 'serializers.g.dart';
 
 @SerializersFor([
   News,
+  StatsCounter,
+  Hospital,
 ])
 final Serializers serializers = _$serializers;
 

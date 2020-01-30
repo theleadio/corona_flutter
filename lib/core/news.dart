@@ -1,4 +1,5 @@
 import 'package:corona_flutter/core/api.dart';
+import 'package:corona_flutter/core/settings.dart';
 import 'package:corona_flutter/model/model.dart';
 import 'package:flutter/widgets.dart';
 
@@ -6,8 +7,16 @@ enum NewsFeedState { idle, loading }
 
 class NewsService with ChangeNotifier {
   final ApiProvider remote;
+  final Settings settings;
 
-  NewsService({this.remote});
+  NewsService({
+    this.remote,
+    this.settings,
+  }) {
+    settings.addListener(refresh);
+  }
+
+  int page = 0;
 
   List<News> _newsList = [];
   List<News> get news => _newsList;
@@ -25,22 +34,20 @@ class NewsService with ChangeNotifier {
     notifyListeners();
   }
 
+  NewsFeedType get feedType => settings.feedType;
+  String get countryCode => settings.countryCode;
+
   NewsFeedState state = NewsFeedState.idle;
 
-  fetch({
-    int offset = 0,
-    NewsFeedType feedType,
-  }) async {
+  fetch() async {
     state = NewsFeedState.loading;
+
     List<News> newsData = await remote.fetchNews(
-      offset: offset,
-      feedType: feedType,
+      offset: page * 10,
+      feedType: settings.feedType ?? NewsFeedType.latest,
+      countryCode: settings.countryCode ?? 'GLOBAL',
     );
     news += newsData;
-  }
-
-  clearNews() {
-    news.clear();
   }
 
   search({
@@ -59,8 +66,16 @@ class NewsService with ChangeNotifier {
     searchResults.clear();
   }
 
+  refresh() {
+    print('refresh News ::: ${settings.countryCode ?? 'GLOBAL'}');
+    page = 0;
+    news.clear();
+    fetch();
+  }
+
   @override
   void dispose() {
+    settings.removeListener(refresh);
     super.dispose();
   }
 }

@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:ant_icons/ant_icons.dart';
 import 'package:corona_flutter/core/api.dart';
 import 'package:corona_flutter/core/news.dart';
-import 'package:corona_flutter/core/search.dart';
+import 'package:corona_flutter/utils/helper.dart';
+import 'package:corona_flutter/widgets/search_delegate.dart';
 import 'package:corona_flutter/model/model.dart';
 import 'package:corona_flutter/pages/news_detail_page.dart';
-import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/items/news_snippet.dart';
 import 'package:flutter/material.dart';
 
@@ -25,8 +25,6 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   ScrollController newsFeedController;
   ScrollController appBarController;
-  int page = 0;
-  NewsFeedType feedType = NewsFeedType.trending;
 
   @override
   void initState() {
@@ -40,8 +38,8 @@ class _NewsPageState extends State<NewsPage> {
                 newsFeedController.position.maxScrollExtent &&
             !newsFeedController.position.outOfRange) {
           setState(() {
-            page++;
-            loadArticles();
+            widget.newsService.page++;
+            widget.newsService.fetch();
           });
         }
       });
@@ -50,7 +48,7 @@ class _NewsPageState extends State<NewsPage> {
       setState(() {});
     });
 
-    loadArticles();
+    widget.newsService.fetch();
   }
 
   @override
@@ -59,15 +57,9 @@ class _NewsPageState extends State<NewsPage> {
     super.dispose();
   }
 
-  loadArticles() {
-    widget.newsService.fetch(offset: page * 10, feedType: feedType);
-  }
-
   Future<void> handleRefresh() async {
     setState(() {
-      widget.newsService.clearNews();
-      page = 0;
-      loadArticles();
+      widget.newsService.refresh();
     });
     return;
   }
@@ -92,54 +84,38 @@ class _NewsPageState extends State<NewsPage> {
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
           SliverAppBar(
+            centerTitle: true,
             title: Text(
-              '${feedType == NewsFeedType.latest ? 'Latest' : 'Trending'} News',
+              '${widget.newsService.feedType == NewsFeedType.latest ? 'Latest' : 'Trending'} News',
               style: TextStyle(
-                fontSize: 26.0,
+                fontSize: 24.0,
                 fontFamily: 'AbrilFatface',
                 color: Colors.black.withOpacity(0.75),
                 fontWeight: FontWeight.w700,
               ),
             ),
+            leading: IconButton(
+              icon: Icon(
+                AntIcons.search_outline,
+                color: Colors.black.withOpacity(0.75),
+              ),
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: NewsSearchDelegate(),
+                );
+              },
+            ),
             actions: <Widget>[
               IconButton(
-                icon: Icon(
-                  AntIcons.search_outline,
-                  color: Colors.black.withOpacity(0.75),
+                icon: Helper.getFlagIcon(
+                  countryCode: widget.newsService.countryCode ?? 'GLOBAL',
+                  width: 24.0,
+                  height: null,
                 ),
                 onPressed: () {
-                  showSearch(
-                    context: context,
-                    delegate: NewsSearch(),
-                  );
+                  Scaffold.of(context).openEndDrawer();
                 },
-              ),
-              PopupMenuButton<NewsFeedType>(
-                offset: Offset(0.0, 8.0),
-                icon: Icon(
-                  AntIcons.sliders_outline,
-                  color: Colors.black.withOpacity(0.75),
-                ),
-                onSelected: (type) {
-                  if (type == feedType) return;
-
-                  setState(() {
-                    page = 0;
-                    widget.newsService.clearNews();
-                    feedType = type;
-                    loadArticles();
-                  });
-                },
-                itemBuilder: (context) => <PopupMenuEntry<NewsFeedType>>[
-                  PopupMenuItem<NewsFeedType>(
-                    value: NewsFeedType.trending,
-                    child: Text('Trending'),
-                  ),
-                  PopupMenuItem<NewsFeedType>(
-                    value: NewsFeedType.latest,
-                    child: Text('Latest'),
-                  )
-                ],
               ),
             ],
             elevation: 0.0,
