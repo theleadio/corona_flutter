@@ -1,15 +1,14 @@
 import 'package:ant_icons/ant_icons.dart';
 import 'package:corona_flutter/core/api.dart';
 import 'package:corona_flutter/core/news.dart';
-import 'package:corona_flutter/core/stat.dart';
 import 'package:corona_flutter/core/settings.dart';
+import 'package:corona_flutter/core/stat.dart';
 import 'package:corona_flutter/pages/explore_page.dart';
 import 'package:corona_flutter/pages/news_page.dart';
 import 'package:corona_flutter/utils/constants.dart';
 import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/bottom_navigation_view.dart';
 import 'package:corona_flutter/widgets/radio_toggle.dart';
-import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

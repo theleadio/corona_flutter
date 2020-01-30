@@ -1,4 +1,3 @@
-import 'package:ant_icons/ant_icons.dart';
 import 'package:corona_flutter/core/stat.dart';
 import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/counter.dart';

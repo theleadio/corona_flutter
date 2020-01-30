@@ -1,5 +1,4 @@
 import 'package:corona_flutter/utils/helper.dart';
-import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 
 class RadioToggle extends StatefulWidget {
