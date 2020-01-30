@@ -14,6 +14,8 @@ class StatsService with ChangeNotifier {
     settings.addListener(getStats);
   }
 
+  String get countryCode => settings.countryCode;
+
   StatsCounter _stats;
   StatsCounter get stats => _stats;
   set stats(StatsCounter value) {
@@ -31,8 +33,9 @@ class StatsService with ChangeNotifier {
   }
 
   getStats() async {
+    print('refresh Stats ::: ${settings.countryCode ?? 'GLOBAL'}');
     StatsCounter updatedStats = await remote.getStats(
-      country: settings.country ?? '',
+      countryCode: settings.countryCode ?? 'GLOBAL',
     );
     stats = updatedStats;
   }

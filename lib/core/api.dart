@@ -3,13 +3,14 @@ import 'dart:convert';
 
 import 'package:corona_flutter/model/model.dart';
 import 'package:corona_flutter/model/serializers.dart';
+import 'package:corona_flutter/utils/helper.dart';
 import 'package:http/http.dart' show Client;
 
 abstract class ApiProvider {
   Future<List<News>> fetchNews(
-      {int offset, NewsFeedType feedType, String country});
+      {int offset, NewsFeedType feedType, String countryCode});
   Future<List<News>> searchNews({String query, int offset});
-  Future<StatsCounter> getStats({String country});
+  Future<StatsCounter> getStats({String countryCode});
 }
 
 enum NewsFeedType { trending, latest }
@@ -21,13 +22,13 @@ class RemoteRepository extends ApiProvider {
   Future<List<News>> fetchNews({
     int offset = 0,
     NewsFeedType feedType = NewsFeedType.trending,
-    String country = '',
+    String countryCode = 'GLOBAL',
   }) async {
     Map<String, String> query = {
       "offset": offset.toString(),
-      "country": country,
+      "country": Helper.getCountryName(countryCode),
     };
-    if (country.length <= 0) {
+    if (countryCode == 'GLOBAL') {
       query.remove("country");
     }
 
@@ -35,7 +36,7 @@ class RemoteRepository extends ApiProvider {
     switch (feedType) {
       case NewsFeedType.trending:
         endpoint = Uri.https(_baseUrl, "/news/trending", query);
-
+        print(endpoint.toString());
         final response = await client.get(endpoint);
 
         if (response.statusCode == 200) {
@@ -84,12 +85,12 @@ class RemoteRepository extends ApiProvider {
   }
 
   Future<StatsCounter> getStats({
-    String country = '',
+    String countryCode = '',
   }) async {
     Map<String, String> query = {};
-    if (country.length > 0) {
+    if (countryCode.length > 0 && countryCode != 'GLOBAL') {
       query = {
-        "country": country,
+        "country": Helper.getCountryName(countryCode),
       };
     }
 
@@ -97,8 +98,12 @@ class RemoteRepository extends ApiProvider {
     final response = await client.get(endpoint);
 
     if (response.statusCode == 200) {
-      final statsData = json.decode(response.body);
-      return deserialize<StatsCounter>(statsData);
+      try {
+        final statsData = json.decode(response.body);
+        return deserialize<StatsCounter>(statsData);
+      } catch (e) {
+        return null;
+      }
     } else {
       return null;
     }

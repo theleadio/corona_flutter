@@ -9,6 +9,7 @@ import 'package:corona_flutter/utils/constants.dart';
 import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/bottom_navigation_view.dart';
 import 'package:corona_flutter/widgets/radio_toggle.dart';
+import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,11 +29,8 @@ class _HomeState extends State<Home> {
           builder: (context, settings, child) {
             return Drawer(
               child: ListView(
-                padding: EdgeInsets.only(left: 24.0),
+                padding: EdgeInsets.only(left: 24.0, top: 32.0, bottom: 32.0),
                 children: <Widget>[
-                  SizedBox(
-                    height: 32.0,
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(left: 24.0),
                     child: Text(
@@ -53,6 +51,7 @@ class _HomeState extends State<Home> {
                           (value) => ValueToggle(
                             isSelected: value == settings.feedType,
                             title: Helper.mapNewsFeedTypeEnumToString(value),
+                            key: Helper.mapNewsFeedTypeEnumToString(value),
                           ),
                         )
                         .toList(),
@@ -62,19 +61,48 @@ class _HomeState extends State<Home> {
 
                       settings.feedType =
                           Helper.mapStringToNewsFeedTypeEnum(value);
-
-                      setState(() {});
                     },
                   ),
                   SizedBox(
-                      height: 36.0,
-                      child: Center(
-                        child: Container(
-                          height: 1.0,
-                          color: Colors.grey,
-                        ),
+                    height: 36.0,
+                    child: Center(
+                      child: Container(
+                        height: 1.0,
+                        color: Colors.grey,
                       ),
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 24.0),
+                    child: Text(
+                      'Country',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.teal,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                  RadioToggle(
+                    choices: AppConstants.countriesList
+                        .map(
+                          (country) => ValueToggle(
+                            isSelected: country["code"] == settings.countryCode,
+                            title: country["name"],
+                            key: country["code"],
+                          ),
+                        )
+                        .toList(),
+                    isFlag: true,
+                    onSelected: (value) {
+                      if (value == settings.countryCode) return;
+
+                      settings.countryCode = value;
+                    },
+                  ),
                 ],
               ),
             );

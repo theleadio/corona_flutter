@@ -6,8 +6,8 @@ class Counter extends ImplicitlyAnimatedWidget {
   Counter({
     Key key,
     @required this.number,
-    Duration duration = const Duration(milliseconds: 300),
-    Curve curve = Curves.easeOut,
+    Duration duration = const Duration(milliseconds: 500),
+    Curve curve = Curves.linear,
   }) : super(
           key: key,
           duration: duration,
@@ -19,7 +19,7 @@ class Counter extends ImplicitlyAnimatedWidget {
       _CounterState();
 }
 
-class _CounterState extends ImplicitlyAnimatedWidgetState<Counter> {
+class _CounterState extends AnimatedWidgetBaseState<Counter> {
   IntTween _counter;
 
   @override
@@ -34,7 +34,7 @@ class _CounterState extends ImplicitlyAnimatedWidgetState<Counter> {
       child: Text(
         _counter.evaluate(animation).toString(),
         style: TextStyle(
-          fontSize: 88.0,
+          fontSize: 65.0,
           fontWeight: FontWeight.w700,
           color: Colors.white,
         ),
@@ -47,7 +47,7 @@ class _CounterState extends ImplicitlyAnimatedWidgetState<Counter> {
     _counter = visitor(
       _counter,
       widget.number,
-      (value) => IntTween(begin: value),
+      (dynamic value) => IntTween(begin: value),
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:corona_flutter/utils/helper.dart';
+import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 
 class RadioToggle extends StatefulWidget {
@@ -6,6 +8,7 @@ class RadioToggle extends StatefulWidget {
   final Color textColor;
   final double fontSize;
   final FontWeight fontWeight;
+  final bool isFlag;
   final List<ValueToggle> choices;
   final void Function(String) onSelected;
 
@@ -17,6 +20,7 @@ class RadioToggle extends StatefulWidget {
     this.textColor = Colors.black,
     this.fontSize = 24.0,
     this.fontWeight = FontWeight.w700,
+    this.isFlag = false,
     this.onSelected,
   }) : super(key: key);
 
@@ -44,7 +48,7 @@ class _RadioToggleState extends State<RadioToggle> {
                     .forEach((item) => item.isSelected = item == choice);
 
                 if (widget.onSelected != null) {
-                  widget.onSelected(choice.title);
+                  widget.onSelected(choice.key);
                 }
 
                 setState(() {});
@@ -59,15 +63,32 @@ class _RadioToggleState extends State<RadioToggle> {
                   top: 8.0,
                   bottom: 8.0,
                 ),
-                child: Text(
-                  choice.title,
-                  style: TextStyle(
-                    color: choice.isSelected
-                        ? widget.activeTextColor
-                        : widget.textColor,
-                    fontSize: widget.fontSize,
-                    fontWeight: widget.fontWeight,
-                  ),
+                child: Row(
+                  children: <Widget>[
+                    widget.isFlag
+                        ? Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Helper.getFlagIcon(
+                              countryCode: choice.key,
+                              width: 24.0,
+                              height: null,
+                              color: choice.isSelected
+                                  ? widget.activeTextColor
+                                  : Colors.black.withOpacity(0.75),
+                            ),
+                          )
+                        : Container(),
+                    Text(
+                      choice.title,
+                      style: TextStyle(
+                        color: choice.isSelected
+                            ? widget.activeTextColor
+                            : widget.textColor,
+                        fontSize: widget.fontSize,
+                        fontWeight: widget.fontWeight,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -86,10 +107,12 @@ class _RadioToggleState extends State<RadioToggle> {
 
 class ValueToggle {
   bool isSelected;
+  final String key;
   final String title;
 
   ValueToggle({
     this.isSelected,
+    this.key,
     this.title,
   });
 }

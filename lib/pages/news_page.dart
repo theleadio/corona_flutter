@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:ant_icons/ant_icons.dart';
 import 'package:corona_flutter/core/api.dart';
 import 'package:corona_flutter/core/news.dart';
+import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/search_delegate.dart';
 import 'package:corona_flutter/model/model.dart';
 import 'package:corona_flutter/pages/news_detail_page.dart';
@@ -24,8 +25,6 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   ScrollController newsFeedController;
   ScrollController appBarController;
-  int page = 0;
-  List<News> news = [];
 
   @override
   void initState() {
@@ -39,8 +38,8 @@ class _NewsPageState extends State<NewsPage> {
                 newsFeedController.position.maxScrollExtent &&
             !newsFeedController.position.outOfRange) {
           setState(() {
-            page++;
-            loadArticles();
+            widget.newsService.page++;
+            widget.newsService.fetch();
           });
         }
       });
@@ -49,7 +48,7 @@ class _NewsPageState extends State<NewsPage> {
       setState(() {});
     });
 
-    loadArticles();
+    widget.newsService.fetch();
   }
 
   @override
@@ -58,15 +57,9 @@ class _NewsPageState extends State<NewsPage> {
     super.dispose();
   }
 
-  loadArticles() {
-    widget.newsService.fetch(offset: page * 10);
-  }
-
   Future<void> handleRefresh() async {
     setState(() {
-      widget.newsService.clearNews();
-      page = 0;
-      loadArticles();
+      widget.newsService.refresh();
     });
     return;
   }
@@ -86,11 +79,6 @@ class _NewsPageState extends State<NewsPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.newsService.news.length < news.length) {
-      page = 0;
-    }
-    news = widget.newsService.news;
-
     return NestedScrollView(
       controller: appBarController,
       headerSliverBuilder: (context, innerBoxIsScrolled) {
@@ -120,9 +108,10 @@ class _NewsPageState extends State<NewsPage> {
             ),
             actions: <Widget>[
               IconButton(
-                icon: Icon(
-                  AntIcons.global,
-                  color: Colors.black.withOpacity(0.75),
+                icon: Helper.getFlagIcon(
+                  countryCode: widget.newsService.countryCode ?? 'GLOBAL',
+                  width: 24.0,
+                  height: null,
                 ),
                 onPressed: () {
                   Scaffold.of(context).openEndDrawer();
@@ -138,7 +127,7 @@ class _NewsPageState extends State<NewsPage> {
         onRefresh: handleRefresh,
         child: NewsFeed(
           key: PageStorageKey('newsFeed'),
-          news: news,
+          news: widget.newsService.news,
           controller: newsFeedController,
           onTap: onTap,
           state: widget.newsService.state,

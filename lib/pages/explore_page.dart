@@ -1,5 +1,6 @@
 import 'package:ant_icons/ant_icons.dart';
 import 'package:corona_flutter/core/stat.dart';
+import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/counter.dart';
 import 'package:flutter/material.dart';
 
@@ -72,8 +73,10 @@ class _ExplorePageState extends State<ExplorePage> {
             ),
             actions: <Widget>[
               IconButton(
-                icon: Icon(
-                  AntIcons.global,
+                icon: Helper.getFlagIcon(
+                  countryCode: widget.statsService.countryCode ?? 'GLOBAL',
+                  width: 24.0,
+                  height: null,
                   color: Colors.black.withOpacity(0.75),
                 ),
                 onPressed: () {
@@ -94,9 +97,9 @@ class _ExplorePageState extends State<ExplorePage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Text(
-                'World',
+                '${Helper.getCountryName(widget.statsService.countryCode ?? 'GLOBAL')}',
                 style: TextStyle(
-                  fontSize: 60.0,
+                  fontSize: 50.0,
                   fontFamily: 'AbrilFatface',
                   fontWeight: FontWeight.w700,
                   color: Colors.black.withOpacity(0.75),
