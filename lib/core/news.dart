@@ -3,19 +3,33 @@ import 'package:corona_flutter/core/settings.dart';
 import 'package:corona_flutter/model/model.dart';
 import 'package:flutter/widgets.dart';
 
+/// [NewsFeedState] defines the state of [NewsService].
+/// * [NewsFeedState.idle] used when [NewsService] is idle and not attempting any API call from remote.
+/// * [NewsFeedState.loading] used when [NewsService] is retrieving results from remote, thus Views
+/// can present visual feedback during the loading state.
 enum NewsFeedState { idle, loading }
 
+/// [NewsService] serves as a Presenter in MVP context in [NewsPage].
+/// [NewsService] depends on [Settings] that defines user preferences, namely [NewsFeedType]
+/// and [countryCode].
 class NewsService with ChangeNotifier {
+  /// [ApiProvider] defines the remote repository of the app content.
   final ApiProvider remote;
+
+  /// [Settings] controls the app content based on user preferences.
   final Settings settings;
 
   NewsService({
-    this.remote,
-    this.settings,
+    @required this.remote,
+    @required this.settings,
   }) {
+    assert(remote != null);
+    assert(settings != null);
+
     settings.addListener(refresh);
   }
 
+  /// [page] keeps track of news offset for news feed pagination.
   int page = 0;
 
   List<News> _newsList = [];
@@ -35,10 +49,12 @@ class NewsService with ChangeNotifier {
   }
 
   NewsFeedType get feedType => settings.feedType;
+
   String get countryCode => settings.countryCode;
 
   NewsFeedState state = NewsFeedState.idle;
 
+  /// Fetch news based on current state.
   fetch() async {
     state = NewsFeedState.loading;
 
@@ -50,6 +66,17 @@ class NewsService with ChangeNotifier {
     news += newsData;
   }
 
+  /// Clear all cached news feed and pagination,
+  /// then retrieve a new copy of news feed.
+  /// Typically use when user preferences change or when user
+  /// forces content refresh.
+  refresh() {
+    page = 0;
+    news.clear();
+    fetch();
+  }
+
+  /// Search news based on user query.
   search({
     int offset = 0,
     String query = '',
@@ -62,14 +89,9 @@ class NewsService with ChangeNotifier {
     searchResults += newsData;
   }
 
+  /// Clear all cached search results.
   clearSearchResults() {
     searchResults.clear();
-  }
-
-  refresh() {
-    page = 0;
-    news.clear();
-    fetch();
   }
 
   @override

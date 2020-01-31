@@ -152,7 +152,7 @@ class CounterWrapper extends StatelessWidget {
               color: Colors.black.withOpacity(0.75),
             ),
           ),
-          Counter(
+          AnimatedCounter(
             number: number,
           ),
         ],

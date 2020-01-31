@@ -1,6 +1,9 @@
 import 'package:corona_flutter/core/api.dart';
 import 'package:flutter/widgets.dart';
 
+/// [Settings] manages state according to user preferences.
+/// Services listen to [Settings] triggered an update every time when
+/// user preference is updated.
 class Settings with ChangeNotifier {
   NewsFeedType _feedType = NewsFeedType.latest;
   NewsFeedType get feedType => _feedType;

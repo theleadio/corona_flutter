@@ -20,6 +20,11 @@ class RemoteRepository extends ApiProvider {
   Client client = Client();
   final String _baseUrl = 'api.coronatracker.com';
 
+  /// Fetch news from API endpoint.
+  ///
+  /// [offset] defines numbers of news to be skipped from query, typically for pagination purpose.
+  /// [feedType] defines user news preferences, either by trending or sort by latest.
+  /// [countryCode] defines the country code to retrieve news specifically about the country.
   Future<List<News>> fetchNews({
     int offset = 0,
     NewsFeedType feedType = NewsFeedType.trending,
@@ -28,6 +33,7 @@ class RemoteRepository extends ApiProvider {
     Map<String, String> query = {
       "offset": offset.toString(),
       "country": Helper.getCountryName(countryCode),
+      "limit": "10",
     };
     if (countryCode == 'GLOBAL') {
       query.remove("country");
@@ -50,6 +56,7 @@ class RemoteRepository extends ApiProvider {
           return [];
         }
         break;
+
       case NewsFeedType.latest:
         query["sort"] = "-publishedAt";
         endpoint = Uri.https(_baseUrl, "/news", query);
@@ -67,6 +74,9 @@ class RemoteRepository extends ApiProvider {
     return [];
   }
 
+  /// Search news from API endpoint using [query].
+  ///
+  /// [offset] defines numbers of news to be skipped from query, typically for pagination purpose.
   Future<List<News>> searchNews({
     String query,
     int offset = 0,
@@ -74,6 +84,7 @@ class RemoteRepository extends ApiProvider {
     var endpoint = Uri.https(_baseUrl, "/news", {
       "q": query,
       "offset": offset.toString(),
+      "limit": "10",
     });
     final response = await client.get(endpoint);
 
@@ -85,6 +96,8 @@ class RemoteRepository extends ApiProvider {
     }
   }
 
+  /// Fetch statistics from API endpoint based on [countryCode].
+  /// If [countryCode] is empty, it will retrieve latest statistics in the world.
   Future<StatsCounter> getStats({
     String countryCode = '',
   }) async {
@@ -110,6 +123,7 @@ class RemoteRepository extends ApiProvider {
     }
   }
 
+  /// Fetch all hospitals' details from API endpoint.
   Future<List<Hospital>> getHospitals() async {
     var endpoint = Uri.https(
       "v2-api.sheety.co",

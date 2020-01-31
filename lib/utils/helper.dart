@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Helper {
+  /// Open web URL.
   static void openWebUrl({
     String url,
     BuildContext context,
@@ -35,6 +36,7 @@ class Helper {
     }
   }
 
+  /// Open telephone number.
   static void openTelNum(String telNum) async {
     try {
       if (await canLaunch('tel:$telNum')) {
@@ -47,10 +49,12 @@ class Helper {
     }
   }
 
+  /// Format timestamp into readable format.
   static String formatDate(String timestamp) {
     return DateFormat.yMMMEd().add_jm().format(DateTime.parse(timestamp));
   }
 
+  /// Map [NewsFeedType] enum into readable [String].
   static String mapNewsFeedTypeEnumToString(NewsFeedType feedType) {
     switch (feedType) {
       case NewsFeedType.trending:
@@ -62,6 +66,7 @@ class Helper {
     }
   }
 
+  /// Map [String] into [NewsFeedType] enum.
   static NewsFeedType mapStringToNewsFeedTypeEnum(String value) {
     if (value == 'Trending') {
       return NewsFeedType.trending;
@@ -70,26 +75,35 @@ class Helper {
     }
   }
 
+  /// Update user shared preferences based on key and value pair.
   static updateUserPref(String key, String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(key, value);
   }
 
+  /// Get user shared preferences based on key.
   static getUserPref(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(key);
   }
 
+  /// Get flag icon based on country code.
+  /// Either width or height should be null, based on library docs.
+  ///
+  /// References:
+  /// * <https://pub.dev/packages/flag>
   static Widget getFlagIcon({
     String countryCode,
     double width,
     double height,
     Color color = Colors.black,
   }) {
+    assert(width == null || height == null);
+
     if (countryCode == "GLOBAL") {
       return Icon(
         AntIcons.global,
-        size: width,
+        size: width ?? height,
         color: color,
       );
     }
@@ -97,6 +111,7 @@ class Helper {
     return Flags.getMiniFlag(countryCode, width, height);
   }
 
+  /// Map country code into country name.
   static String getCountryName(String countryCode) {
     assert(countryCode != null);
 
@@ -104,6 +119,7 @@ class Helper {
       String countryName = AppConstants.countriesList
           .firstWhere((country) => country["code"] == countryCode)["name"];
 
+      // return empty string if country code is 'GLOBAL', for API calling purpose.
       return countryName == 'GLOBAL' ? '' : countryName;
     } catch (e) {
       return 'GLOBAL';

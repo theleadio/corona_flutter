@@ -7,6 +7,12 @@ import 'model.dart';
 
 part 'serializers.g.dart';
 
+/// Code generation utility for JSON and serialization.
+///
+/// References:
+/// * <https://github.com/google/built_value.dart>
+/// * <https://flutter.dev/docs/development/data-and-backend/json>
+
 @SerializersFor([
   News,
   StatsCounter,

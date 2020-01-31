@@ -5,6 +5,12 @@ import 'package:built_value/serializer.dart';
 
 part 'model.g.dart';
 
+/// Code generation utility for JSON and serialization.
+/// 
+/// References:
+/// * <https://github.com/google/built_value.dart>
+/// * <https://flutter.dev/docs/development/data-and-backend/json>
+
 abstract class News implements Built<News, NewsBuilder> {
   static Serializer<News> get serializer => _$newsSerializer;
 

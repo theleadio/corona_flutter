@@ -3,14 +3,23 @@ import 'package:corona_flutter/core/settings.dart';
 import 'package:corona_flutter/model/model.dart';
 import 'package:flutter/widgets.dart';
 
+/// [StatsService] serves as a Presenter in MVP context in [StatisticsPage].
+/// [StatsService] depends on [Settings] that defines user preferences, namely [NewsFeedType]
+/// and [countryCode].
 class StatsService with ChangeNotifier {
+  /// [ApiProvider] defines the remote repository of the app content.
   final ApiProvider remote;
+
+  /// [Settings] controls the app content based on user preferences.
   final Settings settings;
 
   StatsService({
-    this.remote,
-    this.settings,
+    @required this.remote,
+    @required this.settings,
   }) {
+    assert(remote != null);
+    assert(settings != null);
+
     settings.addListener(getStats);
   }
 
@@ -22,16 +31,8 @@ class StatsService with ChangeNotifier {
     _stats = value;
     notifyListeners();
   }
-
-  String _country = '';
-  String get country => _country;
-  set country(String value) {
-    if (value == _country) return;
-
-    _country = value;
-    getStats();
-  }
-
+  
+  /// Fetch statistics based on current state.
   getStats() async {
     StatsCounter updatedStats = await remote.getStats(
       countryCode: settings.countryCode ?? 'GLOBAL',

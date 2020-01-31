@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Counter extends ImplicitlyAnimatedWidget {
+class AnimatedCounter extends ImplicitlyAnimatedWidget {
   final int number;
 
-  Counter({
+  AnimatedCounter({
     Key key,
     @required this.number,
     Duration duration = const Duration(milliseconds: 500),
@@ -16,10 +16,10 @@ class Counter extends ImplicitlyAnimatedWidget {
 
   @override
   ImplicitlyAnimatedWidgetState<ImplicitlyAnimatedWidget> createState() =>
-      _CounterState();
+      _AnimatedCounterState();
 }
 
-class _CounterState extends AnimatedWidgetBaseState<Counter> {
+class _AnimatedCounterState extends AnimatedWidgetBaseState<AnimatedCounter> {
   IntTween _counter;
 
   @override

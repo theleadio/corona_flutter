@@ -4,7 +4,7 @@ import 'package:corona_flutter/core/news.dart';
 import 'package:corona_flutter/core/settings.dart';
 import 'package:corona_flutter/core/stat.dart';
 import 'package:corona_flutter/pages/about_page.dart';
-import 'package:corona_flutter/pages/home.dart';
+import 'package:corona_flutter/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,7 +43,7 @@ class CoronaTrackerApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Corona Tracker',
+        title: 'CoronaTracker',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           brightness: Brightness.light,
@@ -52,7 +52,7 @@ class CoronaTrackerApp extends StatelessWidget {
         ),
         routes: {
           '/': (context) {
-            return Home();
+            return HomePage();
           },
           '/about': (context) {
             return AboutPage();
