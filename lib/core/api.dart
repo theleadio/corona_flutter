@@ -8,7 +8,7 @@ import 'package:http/http.dart' show Client;
 
 abstract class ApiProvider {
   Future<List<News>> fetchNews(
-      {int offset, NewsFeedType feedType, String countryCode});
+      {int offset, NewsFeedType feedType, String countryCode, String language});
   Future<List<News>> searchNews({String query, int offset});
   Future<StatsCounter> getStats({String countryCode});
   Future<List<Hospital>> getHospitals();
@@ -29,11 +29,13 @@ class RemoteRepository extends ApiProvider {
     int offset = 0,
     NewsFeedType feedType = NewsFeedType.trending,
     String countryCode = 'GLOBAL',
+    String language = 'en',
   }) async {
     Map<String, String> query = {
       "offset": offset.toString(),
       "country": Helper.getCountryName(countryCode),
       "limit": "10",
+      "language": language,
     };
     if (countryCode == 'GLOBAL') {
       query.remove("country");
@@ -43,7 +45,6 @@ class RemoteRepository extends ApiProvider {
     switch (feedType) {
       case NewsFeedType.trending:
         endpoint = Uri.https(_baseUrl, "/news/trending", query);
-        print(endpoint.toString());
         final response = await client.get(endpoint);
 
         if (response.statusCode == 200) {

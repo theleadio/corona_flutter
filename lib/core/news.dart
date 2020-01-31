@@ -60,8 +60,9 @@ class NewsService with ChangeNotifier {
 
     List<News> newsData = await remote.fetchNews(
       offset: page * 10,
-      feedType: settings.feedType ?? NewsFeedType.latest,
+      feedType: settings.feedType ?? NewsFeedType.trending,
       countryCode: settings.countryCode ?? 'GLOBAL',
+      language: settings.language ?? 'en',
     );
     news += newsData;
   }
