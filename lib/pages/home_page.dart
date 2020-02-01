@@ -1,5 +1,4 @@
 import 'package:ant_icons/ant_icons.dart';
-import 'package:corona_flutter/core/api.dart';
 import 'package:corona_flutter/core/hospital.dart';
 import 'package:corona_flutter/core/news.dart';
 import 'package:corona_flutter/core/settings.dart';
@@ -57,6 +56,12 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
+            Container(
+              color: Colors.teal,
+              child: Center(
+                child: Text('Placeholder for Prevention, Sources & What\'s 2019-nCoV'),
+              ),
+            )
           ],
         ),
         bottomNavigationBar: BottomNavigationView(
@@ -64,13 +69,16 @@ class _HomePageState extends State<HomePage> {
           activeColor: Colors.teal,
           items: [
             BottomNavigationItem(
-              icon: Icon(AntIcons.profile_outline),
+              icon: Icon(AntIcons.home_outline),
             ),
             BottomNavigationItem(
               icon: Icon(AntIcons.line_chart),
             ),
             BottomNavigationItem(
               icon: Icon(AntIcons.medicine_box_outline),
+            ),
+            BottomNavigationItem(
+              icon: Icon(AntIcons.profile_outline),
             ),
           ],
           onTap: (index) {
@@ -101,7 +109,7 @@ class AppDrawer extends StatelessWidget {
         padding: EdgeInsets.only(left: 24.0, top: 32.0, bottom: 32.0),
         children: <Widget>[
           /// Currently Trending & Latest News returns the same results, save for future usage.
-          /// 
+          ///
           // RadioToggleSection(
           //   title: 'News Feed',
           //   valueToggles: NewsFeedType.values

@@ -16,7 +16,7 @@ class NewsSearchDelegate extends SearchDelegate<News> {
       primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.black87),
       primaryTextTheme: theme.textTheme,
       textTheme: theme.textTheme.copyWith(
-        title: theme.textTheme.title.copyWith(fontSize: 16.0),
+        headline6: theme.textTheme.headline6.copyWith(fontSize: 16.0),
       ),
     );
   }
