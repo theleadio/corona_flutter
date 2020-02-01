@@ -100,35 +100,50 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.only(left: 24.0, top: 32.0, bottom: 32.0),
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 24.0),
-            child: Text(
-              'News Feed',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w700,
-                color: Colors.teal,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 8.0,
-          ),
-          RadioToggle(
-            choices: NewsFeedType.values
+          /// Currently Trending & Latest News returns the same results, save for future usage.
+          /// 
+          // RadioToggleSection(
+          //   title: 'News Feed',
+          //   valueToggles: NewsFeedType.values
+          //       .map(
+          //         (value) => ValueToggle(
+          //           isSelected: value == settings.feedType,
+          //           title: Helper.mapNewsFeedTypeEnumToString(value),
+          //           key: Helper.mapNewsFeedTypeEnumToString(value),
+          //         ),
+          //       )
+          //       .toList(),
+          //   onSelected: (value) {
+          //     if (Helper.mapStringToNewsFeedTypeEnum(value) ==
+          //         settings.feedType) return;
+
+          //     settings.feedType = Helper.mapStringToNewsFeedTypeEnum(value);
+          //   },
+          // ),
+          // SizedBox(
+          //   height: 36.0,
+          //   child: Center(
+          //     child: Container(
+          //       height: 1.0,
+          //       color: Colors.grey,
+          //     ),
+          //   ),
+          // ),
+          RadioToggleSection(
+            title: 'News Language',
+            valueToggles: AppConstants.languagesList
                 .map(
-                  (value) => ValueToggle(
-                    isSelected: value == settings.feedType,
-                    title: Helper.mapNewsFeedTypeEnumToString(value),
-                    key: Helper.mapNewsFeedTypeEnumToString(value),
+                  (lang) => ValueToggle(
+                    isSelected: lang["id"] == settings.language,
+                    title: lang["name"],
+                    key: lang["id"],
                   ),
                 )
                 .toList(),
             onSelected: (value) {
-              if (Helper.mapStringToNewsFeedTypeEnum(value) ==
-                  settings.feedType) return;
+              if (value == settings.language) return;
 
-              settings.feedType = Helper.mapStringToNewsFeedTypeEnum(value);
+              settings.language = value;
             },
           ),
           SizedBox(
@@ -140,22 +155,9 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 24.0),
-            child: Text(
-              'Country',
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.w700,
-                color: Colors.teal,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 8.0,
-          ),
-          RadioToggle(
-            choices: AppConstants.countriesList
+          RadioToggleSection(
+            title: 'Country',
+            valueToggles: AppConstants.countriesList
                 .map(
                   (country) => ValueToggle(
                     isSelected: country["code"] == settings.countryCode,
@@ -164,12 +166,12 @@ class AppDrawer extends StatelessWidget {
                   ),
                 )
                 .toList(),
-            isFlag: true,
             onSelected: (value) {
               if (value == settings.countryCode) return;
 
               settings.countryCode = value;
             },
+            isFlag: true,
           ),
           SizedBox(
             height: 36.0,
@@ -231,6 +233,49 @@ class AppDrawer extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class RadioToggleSection extends StatelessWidget {
+  final String title;
+  final List<ValueToggle> valueToggles;
+  final void Function(dynamic) onSelected;
+  final bool isFlag;
+
+  const RadioToggleSection({
+    Key key,
+    this.title,
+    this.valueToggles,
+    this.onSelected,
+    this.isFlag = false,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 24.0),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w700,
+              color: Colors.teal,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 8.0,
+        ),
+        RadioToggle(
+          choices: valueToggles,
+          onSelected: onSelected,
+          isFlag: isFlag,
+        ),
+      ],
     );
   }
 }

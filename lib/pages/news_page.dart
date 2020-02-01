@@ -86,7 +86,7 @@ class _NewsPageState extends State<NewsPage> {
           SliverAppBar(
             centerTitle: true,
             title: Text(
-              '${widget.newsService.feedType == NewsFeedType.latest ? 'Latest' : 'Trending'} News',
+              '${widget.newsService.feedType == NewsFeedType.trending ? 'Trending' : 'Latest'} News',
               style: TextStyle(
                 fontSize: 24.0,
                 fontFamily: 'AbrilFatface',

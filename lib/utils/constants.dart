@@ -23,6 +23,13 @@ class AppConstants {
     {"code": "VN", "name": "Vietnam"},
   ];
 
+  // News Languages
+  static List<Map<String, String>> languagesList = [
+    {"id": "en", "name": "English"},
+    {"id": "ms", "name": "Bahasa Melayu"},
+    // {"id": "zh", "name": "中文"},
+  ];
+
   // About us text
   static String about = "CORONATRACKER.com is a community-based project powered by over 460 volunteers from across the globe, ranging from data scientists, medical professionals, UI/UX designers, fullstack developers, to the general public.\n\n" +
       "It acts as a portal for the public to keep track of the latest news development about the 2019-nCov, alongside collecting data for further analysis. All the contents are handpicked, filtered, and curated by volunteers to our best extent to ensure that sources are reliable with minimal hoaxes and fake news, in the best benefit of the public. Natural Language Processing (NLP) is used to analyze trending content and identify meaningful topics over various news sources and social media platforms prior to being verified by our team.\n\n" +

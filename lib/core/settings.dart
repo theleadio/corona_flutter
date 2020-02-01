@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 /// Services listen to [Settings] triggered an update every time when
 /// user preference is updated.
 class Settings with ChangeNotifier {
-  NewsFeedType _feedType = NewsFeedType.latest;
+  NewsFeedType _feedType = NewsFeedType.trending;
   NewsFeedType get feedType => _feedType;
   set feedType(NewsFeedType value) {
     if (value == _feedType) return;
@@ -20,6 +20,15 @@ class Settings with ChangeNotifier {
     if (value == _countryCode) return;
 
     _countryCode = value;
+    notifyListeners();
+  }
+
+  String _language = 'en';
+  String get language => _language;
+  set language(String value) {
+    if (value == _language) return;
+
+    _language = value;
     notifyListeners();
   }
 }
