@@ -41,7 +41,6 @@
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		3A399D0423E5D94F00174691 /* Corona Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Corona Tracker.entitlements"; sourceTree = "<group>"; };
-		3A6D51ED23E590ED001FE076 /* Runner copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Runner copy-Info.plist"; path = "/Users/joscmw95/personal/corona_flutter/ios/Runner copy-Info.plist"; sourceTree = "<absolute>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		3B80C3931E831B6300D905FE /* App.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = App.framework; path = Flutter/App.framework; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -102,7 +101,6 @@
 				97C146EF1CF9000F007C117D /* Products */,
 				A611BF283E81A52E3A3AED7E /* Pods */,
 				2517F07378F2674079DBD55C /* Frameworks */,
-				3A6D51ED23E590ED001FE076 /* Runner copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
