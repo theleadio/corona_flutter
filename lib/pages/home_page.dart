@@ -1,11 +1,9 @@
 import 'package:ant_icons/ant_icons.dart';
-import 'package:corona_flutter/core/api.dart';
-import 'package:corona_flutter/core/hospital.dart';
 import 'package:corona_flutter/core/news.dart';
 import 'package:corona_flutter/core/settings.dart';
 import 'package:corona_flutter/core/stat.dart';
 import 'package:corona_flutter/pages/explore_page.dart';
-import 'package:corona_flutter/pages/hospital_page.dart';
+import 'package:corona_flutter/pages/medical_page.dart';
 import 'package:corona_flutter/pages/news_page.dart';
 import 'package:corona_flutter/utils/constants.dart';
 import 'package:corona_flutter/utils/helper.dart';
@@ -50,13 +48,7 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-            Consumer<HospitalsService>(
-              builder: (context, hospitalsService, _) {
-                return HospitalPage(
-                  hospitalsService: hospitalsService,
-                );
-              },
-            ),
+            MedicalPage(),
           ],
         ),
         bottomNavigationBar: BottomNavigationView(
@@ -64,7 +56,7 @@ class _HomePageState extends State<HomePage> {
           activeColor: Colors.teal,
           items: [
             BottomNavigationItem(
-              icon: Icon(AntIcons.profile_outline),
+              icon: Icon(AntIcons.home_outline),
             ),
             BottomNavigationItem(
               icon: Icon(AntIcons.line_chart),
