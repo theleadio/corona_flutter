@@ -249,7 +249,7 @@ class _BottomNavigationViewState extends State<BottomNavigationView>
           Positioned.fill(
             child: Material(
               // Casts shadow.
-              elevation: 12.0,
+              elevation: 16.0,
               color: widget.backgroundColor,
             ),
           ),

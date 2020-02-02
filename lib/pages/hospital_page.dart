@@ -19,20 +19,16 @@ class HospitalPage extends StatefulWidget {
   _HospitalPageState createState() => _HospitalPageState();
 }
 
-class _HospitalPageState extends State<HospitalPage> {
+class _HospitalPageState extends State<HospitalPage>
+    with AutomaticKeepAliveClientMixin {
   ScrollController hospitalsController;
-  ScrollController appBarController;
   List<Hospital> hospitals = [];
 
   @override
   void initState() {
     super.initState();
 
-    appBarController = ScrollController();
-    hospitalsController = ScrollController()
-      ..addListener(() {
-        appBarController.jumpTo(hospitalsController.offset);
-      });
+    hospitalsController = ScrollController();
 
     widget.hospitalsService.addListener(() {
       setState(() {});
@@ -46,6 +42,9 @@ class _HospitalPageState extends State<HospitalPage> {
     hospitalsController.dispose();
     super.dispose();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 
   Future<void> handleRefresh() async {
     setState(() {
@@ -79,103 +78,95 @@ class _HospitalPageState extends State<HospitalPage> {
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-      controller: appBarController,
-      headerSliverBuilder: (context, innerBoxIsScrolled) {
-        return [
-          SliverAppBar(
-            centerTitle: true,
-            title: Text(
-              'Hospitals',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontFamily: 'AbrilFatface',
-                color: Colors.black.withOpacity(0.75),
-                fontWeight: FontWeight.w700,
+    super.build(context);
+    return RefreshIndicator(
+      onRefresh: handleRefresh,
+      child: DraggableScrollbar.rrect(
+        backgroundColor: Colors.teal,
+        heightScrollThumb: 64.0,
+        controller: hospitalsController,
+        child: ListView(
+          key: PageStorageKey('hospitals'),
+          controller: hospitalsController,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 24.0,
+                top: 16.0,
               ),
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Helper.getFlagIcon(
-                  countryCode: widget.hospitalsService.countryCode ?? 'GLOBAL',
-                  width: 24.0,
-                  height: null,
+              child: Text(
+                '${Helper.getCountryName(widget.hospitalsService.countryCode ?? 'GLOBAL')}',
+                style: TextStyle(
+                  fontSize: 45.0,
+                  fontFamily: 'AbrilFatface',
+                  fontWeight: FontWeight.w700,
                   color: Colors.black.withOpacity(0.75),
                 ),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
               ),
-            ],
-            elevation: 0.0,
-            backgroundColor: Colors.white24,
-          ),
-        ];
-      },
-      body: RefreshIndicator(
-        onRefresh: handleRefresh,
-        child: DraggableScrollbar.rrect(
-          backgroundColor: Colors.teal,
-          heightScrollThumb: 64.0,
-          controller: hospitalsController,
-          child: ListView(
-            key: PageStorageKey('hospitals'),
-            controller: hospitalsController,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Text(
-                  '${Helper.getCountryName(widget.hospitalsService.countryCode ?? 'GLOBAL')}',
-                  style: TextStyle(
-                    fontSize: 50.0,
-                    fontFamily: 'AbrilFatface',
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black.withOpacity(0.75),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 24.0,
-                  right: MediaQuery.of(context).size.width * 0.20,
-                ),
-                child: ButtonTheme(
+            ),
+            Row(
+              children: <Widget>[
+                ButtonTheme(
                   alignedDropdown: true,
-                  child: DropdownButton(
-                    isExpanded: true,
-                    items: widget.hospitalsService
-                        .getStateByCountry()
-                        .map(
-                          (state) => DropdownMenuItem(
-                            child: Text(state),
-                            value: state,
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        widget.hospitalsService.state = value;
-                      });
-                    },
-                    elevation: 4,
-                    style: TextStyle(
-                        fontFamily: 'HKGrotesk',
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black.withOpacity(0.75)),
-                    value: widget.hospitalsService.state,
-                    underline: Container(
-                      height: 2,
-                      width: 60.0,
-                      color: Colors.teal,
+                  child: Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 24.0, right: 8.0),
+                      child: DropdownButton(
+                        isExpanded: true,
+                        items: widget.hospitalsService
+                            .getStateByCountry()
+                            .map(
+                              (state) => DropdownMenuItem(
+                                child: Text(
+                                  state,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                value: state,
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            widget.hospitalsService.state = value;
+                          });
+                        },
+                        elevation: 4,
+                        style: TextStyle(
+                            fontFamily: 'HKGrotesk',
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black.withOpacity(0.75)),
+                        value: widget.hospitalsService.state,
+                        underline: Container(
+                          height: 2,
+                          width: 60.0,
+                          color: Colors.teal,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 12.0),
-              ..._buildHospitalSnippets(),
-            ],
-          ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: IconButton(
+                    icon: Helper.getFlagIcon(
+                      countryCode:
+                          widget.hospitalsService.countryCode ?? 'GLOBAL',
+                      width: 24.0,
+                      height: null,
+                      color: Colors.black.withOpacity(0.75),
+                    ),
+                    onPressed: () {
+                      Scaffold.of(context).openEndDrawer();
+                    },
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 12.0),
+            ..._buildHospitalSnippets(),
+          ],
         ),
       ),
     );
