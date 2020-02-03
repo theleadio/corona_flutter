@@ -55,7 +55,7 @@ class _CounterPageState extends State<CounterPage>
             child: Text(
               '${Helper.getCountryName(widget.statsService.countryCode ?? 'GLOBAL')}',
               style: TextStyle(
-                fontSize: 50.0,
+                fontSize: 45.0,
                 fontFamily: 'AbrilFatface',
                 fontWeight: FontWeight.w700,
                 color: Colors.black.withOpacity(0.75),

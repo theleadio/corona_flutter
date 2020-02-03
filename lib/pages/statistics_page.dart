@@ -1,12 +1,10 @@
-import 'package:corona_flutter/core/hospital.dart';
 import 'package:corona_flutter/core/stat.dart';
+import 'package:corona_flutter/pages/analytics_page.dart';
 import 'package:corona_flutter/pages/counter_page.dart';
-import 'package:corona_flutter/pages/hospital_page.dart';
 import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/web_view_wrapper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class StatisticsPage extends StatefulWidget {
   final StatsService statsService;
@@ -106,14 +104,11 @@ class _StatisticsPageState extends State<StatisticsPage>
           CounterPage(
             statsService: widget.statsService,
           ),
-          ..._embededWebs
-              .map(
-                (web) => WebViewWrapper(
-                  key: Key(web.title),
-                  initialUrl: web.url,
-                ),
-              )
-              .toList(),
+          ..._embededWebs.map(
+            (web) => AnalyticsPage(
+              url: web.url,
+            ),
+          ),
         ],
       ),
     );
