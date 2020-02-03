@@ -1,5 +1,6 @@
 import 'package:corona_flutter/core/hospital.dart';
 import 'package:corona_flutter/pages/hospital_page.dart';
+import 'package:corona_flutter/pages/sources_page.dart';
 import 'package:corona_flutter/widgets/web_view_wrapper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,18 +22,15 @@ class _MedicalPageState extends State<MedicalPage>
     ),
     EmbeddedWeb(
       title: 'Prevention',
-      url: 'https://www.coronatracker.com/sources',
-    ),
-    EmbeddedWeb(
-      title: 'Sources',
-      url: 'https://www.coronatracker.com/prevention',
+      url:
+          'https://www.who.int/emergencies/diseases/novel-coronavirus-2019/advice-for-public',
     ),
   ];
 
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: _embededWebs.length + 1);
+    _controller = TabController(vsync: this, length: _embededWebs.length + 2);
   }
 
   @override
@@ -76,6 +74,7 @@ class _MedicalPageState extends State<MedicalPage>
                       ),
                     )
                     .toList(),
+                Tab(text: 'Sources'),
               ],
             ),
             elevation: 2.0,
@@ -101,6 +100,7 @@ class _MedicalPageState extends State<MedicalPage>
                 ),
               )
               .toList(),
+          SourcesPage(),
         ],
       ),
     );

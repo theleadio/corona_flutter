@@ -1,3 +1,5 @@
+import 'package:corona_flutter/pages/sources_page.dart';
+
 class AppConstants {
   static String coronaTrackerWebUrl = "https://www.coronatracker.com/";
   static String devListUrl =
@@ -38,4 +40,31 @@ class AppConstants {
       "We were inspired by the Coronavirus Outbreak Map by John Hopkins University that was very informative. We also recognised the difficulty to gather data for in-depth analysis through various other sources of scattered data on different news portals as well as in different languages.\n\n" +
       "Works started on the 25th of January, the first day of the Lunar New Year. Our team has been working relentlessly to make this a success, and launched officially on the 27th of January.\n\n" +
       "We aim to use technology and make information more accessible, gather talented people all around the world to win the fight!";
+
+  static List<Sources> sources = [
+    Sources(
+      title:
+          'Discovery of a novel coronavirus associated with the recent pneumonia outbreak in humans and its potential bat origin',
+      description:
+          'A report by Jasper Fuk-Woo Chan and colleagues, documented infections in health-care workers caring for patients with 2019-nCoV indicate human-to-human transmission and thus the risk of much wider spread of the disease.',
+      source: 'The Lancet',
+      url:
+          'https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(20)30185-9/fulltext',
+    ),
+    Sources(
+      title: 'Another year, another coronavirus',
+      description:
+          'For the third time in as many decades, a zoonotic coronavirus has crossed species to infect human populations. This virus, provisionally called 2019-nCoV, was first identified in Wuhan, China, in persons exposed to a seafood or wet market.',
+      source: 'The New England Journal of Medcine',
+      url: 'https://www.nejm.org/doi/full/10.1056/NEJMe2001126',
+    ),
+    Sources(
+      title: 'Wuhan Coronavirus (2019-nCoV) Global Cases (by JHU CSSE)',
+      description:
+          'An online dashboard to visualize and track the reported cases on a daily timescale',
+      source: 'John Hopkins University',
+      url:
+          'https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6',
+    ),
+  ];
 }
