@@ -119,7 +119,8 @@ class _NewsPageState extends State<NewsPage> {
               ),
             ],
             elevation: 0.0,
-            backgroundColor: Colors.white24,
+            backgroundColor: Colors.grey[50],
+            floating: true,
           ),
         ];
       },

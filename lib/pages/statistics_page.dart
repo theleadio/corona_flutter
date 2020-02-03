@@ -1,31 +1,33 @@
 import 'package:corona_flutter/core/hospital.dart';
+import 'package:corona_flutter/core/stat.dart';
+import 'package:corona_flutter/pages/counter_page.dart';
 import 'package:corona_flutter/pages/hospital_page.dart';
+import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/web_view_wrapper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MedicalPage extends StatefulWidget {
+class StatisticsPage extends StatefulWidget {
+  final StatsService statsService;
+
+  const StatisticsPage({
+    Key key,
+    this.statsService,
+  }) : super(key: key);
+
   @override
-  _MedicalPageState createState() => _MedicalPageState();
+  _StatisticsPageState createState() => _StatisticsPageState();
 }
 
-class _MedicalPageState extends State<MedicalPage>
+class _StatisticsPageState extends State<StatisticsPage>
     with SingleTickerProviderStateMixin {
   TabController _controller;
 
   final List<EmbeddedWeb> _embededWebs = [
     EmbeddedWeb(
-      title: 'What is 2019-nCoV',
-      url: 'https://www.cdc.gov/coronavirus/2019-ncov/about/index.html',
-    ),
-    EmbeddedWeb(
-      title: 'Prevention',
-      url: 'https://www.coronatracker.com/sources',
-    ),
-    EmbeddedWeb(
-      title: 'Sources',
-      url: 'https://www.coronatracker.com/prevention',
+      title: 'Analytics',
+      url: 'https://www.coronatracker.com/analytics',
     ),
   ];
 
@@ -49,7 +51,7 @@ class _MedicalPageState extends State<MedicalPage>
           SliverAppBar(
             centerTitle: true,
             title: Text(
-              'Medical',
+              'Statistics',
               style: TextStyle(
                 fontSize: 24.0,
                 fontFamily: 'AbrilFatface',
@@ -59,7 +61,7 @@ class _MedicalPageState extends State<MedicalPage>
             ),
             bottom: TabBar(
               controller: _controller,
-              isScrollable: true,
+              isScrollable: false,
               indicatorWeight: 4.0,
               labelColor: Colors.black.withOpacity(0.75),
               labelStyle: TextStyle(
@@ -68,7 +70,7 @@ class _MedicalPageState extends State<MedicalPage>
                 fontWeight: FontWeight.w700,
               ),
               tabs: [
-                Tab(text: 'Hospitals'),
+                Tab(text: 'Counter'),
                 ..._embededWebs
                     .map(
                       (web) => Tab(
@@ -78,6 +80,19 @@ class _MedicalPageState extends State<MedicalPage>
                     .toList(),
               ],
             ),
+            actions: <Widget>[
+              IconButton(
+                icon: Helper.getFlagIcon(
+                  countryCode: widget.statsService.countryCode ?? 'GLOBAL',
+                  width: 24.0,
+                  height: null,
+                  color: Colors.black.withOpacity(0.75),
+                ),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              ),
+            ],
             elevation: 2.0,
             backgroundColor: Colors.grey[50],
             pinned: true,
@@ -88,10 +103,8 @@ class _MedicalPageState extends State<MedicalPage>
       body: TabBarView(
         controller: _controller,
         children: <Widget>[
-          Consumer<HospitalsService>(
-            builder: (context, hospitalsService, _) => HospitalPage(
-              hospitalsService: hospitalsService,
-            ),
+          CounterPage(
+            statsService: widget.statsService,
           ),
           ..._embededWebs
               .map(

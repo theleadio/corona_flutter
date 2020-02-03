@@ -55,3 +55,13 @@ class _WebViewWrapperState extends State<WebViewWrapper>
     );
   }
 }
+
+class EmbeddedWeb {
+  final String title;
+  final String url;
+
+  EmbeddedWeb({
+    this.title,
+    this.url,
+  });
+}

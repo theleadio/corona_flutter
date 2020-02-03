@@ -2,9 +2,9 @@ import 'package:ant_icons/ant_icons.dart';
 import 'package:corona_flutter/core/news.dart';
 import 'package:corona_flutter/core/settings.dart';
 import 'package:corona_flutter/core/stat.dart';
-import 'package:corona_flutter/pages/explore_page.dart';
 import 'package:corona_flutter/pages/medical_page.dart';
 import 'package:corona_flutter/pages/news_page.dart';
+import 'package:corona_flutter/pages/statistics_page.dart';
 import 'package:corona_flutter/utils/constants.dart';
 import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/bottom_navigation_view.dart';
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Consumer<StatsService>(
               builder: (context, statsService, _) {
-                return ExplorePage(
+                return StatisticsPage(
                   statsService: statsService,
                 );
               },
@@ -93,7 +93,7 @@ class AppDrawer extends StatelessWidget {
         padding: EdgeInsets.only(left: 24.0, top: 32.0, bottom: 32.0),
         children: <Widget>[
           /// Currently Trending & Latest News returns the same results, save for future usage.
-          /// 
+          ///
           // RadioToggleSection(
           //   title: 'News Feed',
           //   valueToggles: NewsFeedType.values
