@@ -71,6 +71,8 @@ class _HospitalPageState extends State<HospitalPage>
             country: hospital.country,
             telNumber: hospital.telNo,
             webUrl: hospital.officialAdvisory ?? '',
+            lat: hospital.lat ?? '',
+            long: hospital.long ?? '',
           ),
         )
         .toList();
@@ -180,6 +182,8 @@ class HospitalSnippet extends StatelessWidget {
   final String state;
   final String country;
   final String telNumber;
+  final String lat;
+  final String long;
   final String webUrl;
 
   const HospitalSnippet({
@@ -190,6 +194,8 @@ class HospitalSnippet extends StatelessWidget {
     this.state,
     this.country,
     this.telNumber,
+    this.lat,
+    this.long,
     this.webUrl,
   }) : super(key: key);
 
@@ -256,7 +262,24 @@ class HospitalSnippet extends StatelessWidget {
                           onPressed: () {
                             Helper.openWebUrl(context: context, url: webUrl);
                           },
-                        )
+                        ),
+                  lat.length <= 0 && long.length <= 0
+                      ? Container()
+                      : IconButton(
+                          icon: Icon(
+                            AntIcons.compass_outline,
+                            color: Colors.teal,
+                          ),
+                          onPressed: () {
+                            Helper.openGeolocation(
+                              context: context,
+                              lat: lat,
+                              long: long,
+                              name: name,
+                              address: address,
+                            );
+                          },
+                        ),
                 ],
               ),
             ],

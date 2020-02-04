@@ -1,7 +1,7 @@
 import 'package:corona_flutter/core/news.dart';
 import 'package:corona_flutter/model/model.dart';
-import 'package:corona_flutter/pages/news_detail_page.dart';
-import 'package:corona_flutter/pages/news_page.dart';
+import 'package:corona_flutter/pages/news/news_detail_page.dart';
+import 'package:corona_flutter/pages/news/news_page.dart';
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatefulWidget {

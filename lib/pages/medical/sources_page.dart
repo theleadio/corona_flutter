@@ -43,10 +43,6 @@ class SourcesPage extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
-          height: 12.0,
-          child: Container(color: Colors.grey[200]),
-        ),
         ...AppConstants.sources
             .map(
               (source) => SourcesSnippet(
@@ -129,57 +125,64 @@ class SourcesSnippet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => Helper.openWebUrl(
-        context: context,
-        url: url,
+    return Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const SizedBox(height: 24.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.black.withOpacity(0.75),
-                fontWeight: FontWeight.w700,
+      margin: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 8.0,
+      ),
+      child: InkWell(
+        onTap: () => Helper.openWebUrl(
+          context: context,
+          url: url,
+        ),
+        borderRadius: BorderRadius.circular(12.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(height: 24.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.black.withOpacity(0.75),
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 8.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Text(
-              source,
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.black54,
-                fontWeight: FontWeight.w600,
+            const SizedBox(height: 8.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Text(
+                source,
+                style: TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 8.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Text(
-              description,
-              style: TextStyle(
-                fontSize: 15.0,
-                color: Colors.black.withOpacity(0.75),
-                fontWeight: FontWeight.w600,
+            const SizedBox(height: 8.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Text(
+                description,
+                style: TextStyle(
+                  fontSize: 15.0,
+                  color: Colors.black.withOpacity(0.75),
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 24.0),
-          SizedBox(
-            height: 12.0,
-            child: Container(color: Colors.grey[200]),
-          ),
-        ],
+            const SizedBox(height: 24.0),
+          ],
+        ),
       ),
     );
   }

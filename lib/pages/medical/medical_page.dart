@@ -1,6 +1,6 @@
 import 'package:corona_flutter/core/hospital.dart';
-import 'package:corona_flutter/pages/hospital_page.dart';
-import 'package:corona_flutter/pages/sources_page.dart';
+import 'package:corona_flutter/pages/medical/hospital_page.dart';
+import 'package:corona_flutter/pages/medical/sources_page.dart';
 import 'package:corona_flutter/widgets/web_view_wrapper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
 import 'package:corona_flutter/core/stat.dart';
-import 'package:corona_flutter/pages/analytics_page.dart';
-import 'package:corona_flutter/pages/counter_page.dart';
+import 'package:corona_flutter/pages/statistics/analytics_page.dart';
+import 'package:corona_flutter/pages/statistics/counter_page.dart';
 import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/web_view_wrapper.dart';
 import 'package:flutter/foundation.dart';

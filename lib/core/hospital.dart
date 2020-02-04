@@ -20,7 +20,7 @@ class HospitalsService with ChangeNotifier {
     assert(remote != null);
     assert(settings != null);
 
-    settings.addListener(refreshHospitals);
+    settings.addListener(refreshHospitalsAndClearState);
   }
 
   /// [localHospitalsList] is the cache for all hospitals in specific location of interest
@@ -77,15 +77,22 @@ class HospitalsService with ChangeNotifier {
   /// Clear all cached hospitals list.
   /// Typically use when user preferences change or when user
   /// forces content refresh.
-  refreshHospitals() async {
+  refreshHospitalsAndClearState() async {
     List<Hospital> hospitals = await remote.getHospitals();
     hospitalsList = hospitals;
     state = "ALL";
   }
 
+  /// Clear all cached hospitals list, but retain current state of user preferences.
+  refreshHospitals() async {
+    List<Hospital> hospitals = await remote.getHospitals();
+    hospitalsList = hospitals;
+  }
+
+
   @override
   void dispose() {
-    settings.removeListener(refreshHospitals);
+    settings.removeListener(refreshHospitalsAndClearState);
     super.dispose();
   }
 }

@@ -36,6 +36,26 @@ class Helper {
     }
   }
 
+  /// Open Geolocation.
+  static void openGeolocation({
+    String lat,
+    String long,
+    String name,
+    String address,
+    BuildContext context,
+  }) async {
+    try {
+      if (await canLaunch(
+          'geo:$lat,$long?q=${name.replaceAll(RegExp(' +'), '+')},+${address.replaceAll(RegExp(' +'), '+')}')) {
+        await launch(
+          'geo:$lat,$long?q=${name.replaceAll(RegExp(' +'), '+')},+${address.replaceAll(RegExp(' +'), '+')}',
+        );
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
   /// Open telephone number.
   static void openTelNum(String telNum) async {
     try {

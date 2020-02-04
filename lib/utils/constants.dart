@@ -1,4 +1,4 @@
-import 'package:corona_flutter/pages/sources_page.dart';
+import 'package:corona_flutter/pages/medical/sources_page.dart';
 
 class AppConstants {
   static String coronaTrackerWebUrl = "https://www.coronatracker.com/";
@@ -29,7 +29,8 @@ class AppConstants {
   static List<Map<String, String>> languagesList = [
     {"id": "en", "name": "English"},
     {"id": "ms", "name": "Bahasa Melayu"},
-    // {"id": "zh", "name": "中文"},
+    {"id": "zh", "name": "简体中文"},
+    {"id": "zh_TW", "name": "繁體中文"},
   ];
 
   // About us text

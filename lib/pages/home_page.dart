@@ -2,9 +2,9 @@ import 'package:ant_icons/ant_icons.dart';
 import 'package:corona_flutter/core/news.dart';
 import 'package:corona_flutter/core/settings.dart';
 import 'package:corona_flutter/core/stat.dart';
-import 'package:corona_flutter/pages/medical_page.dart';
-import 'package:corona_flutter/pages/news_page.dart';
-import 'package:corona_flutter/pages/statistics_page.dart';
+import 'package:corona_flutter/pages/medical/medical_page.dart';
+import 'package:corona_flutter/pages/news/news_page.dart';
+import 'package:corona_flutter/pages/statistics/statistics_page.dart';
 import 'package:corona_flutter/utils/constants.dart';
 import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/bottom_navigation_view.dart';
@@ -92,35 +92,6 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.only(left: 24.0, top: 32.0, bottom: 32.0),
         children: <Widget>[
-          /// Currently Trending & Latest News returns the same results, save for future usage.
-          ///
-          // RadioToggleSection(
-          //   title: 'News Feed',
-          //   valueToggles: NewsFeedType.values
-          //       .map(
-          //         (value) => ValueToggle(
-          //           isSelected: value == settings.feedType,
-          //           title: Helper.mapNewsFeedTypeEnumToString(value),
-          //           key: Helper.mapNewsFeedTypeEnumToString(value),
-          //         ),
-          //       )
-          //       .toList(),
-          //   onSelected: (value) {
-          //     if (Helper.mapStringToNewsFeedTypeEnum(value) ==
-          //         settings.feedType) return;
-
-          //     settings.feedType = Helper.mapStringToNewsFeedTypeEnum(value);
-          //   },
-          // ),
-          // SizedBox(
-          //   height: 36.0,
-          //   child: Center(
-          //     child: Container(
-          //       height: 1.0,
-          //       color: Colors.grey,
-          //     ),
-          //   ),
-          // ),
           RadioToggleSection(
             title: 'News Language',
             valueToggles: AppConstants.languagesList
