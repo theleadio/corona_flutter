@@ -15,6 +15,8 @@ class AppConstants {
   static List<Map<String, String>> countriesList = [
     {"code": "GLOBAL", "name": "Global"},
     {"code": "CN", "name": "China"},
+    {"code": "HK", "name": "Hong Kong"},
+    {"code": "TW", "name": "Taiwan"},
     {"code": "ID", "name": "Indonesia"},
     {"code": "JP", "name": "Japan"},
     {"code": "KR", "name": "South Korea"},
@@ -29,7 +31,7 @@ class AppConstants {
   static List<Map<String, String>> languagesList = [
     {"id": "en", "name": "English"},
     {"id": "ms", "name": "Bahasa Melayu"},
-    {"id": "zh", "name": "简体中文"},
+    // {"id": "zh", "name": "简体中文"},
     {"id": "zh_TW", "name": "繁體中文"},
   ];
 

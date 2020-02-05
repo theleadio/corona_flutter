@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class AnimatedCounter extends ImplicitlyAnimatedWidget {
   final int number;
+  final Color color;
 
   AnimatedCounter({
     Key key,
     @required this.number,
+    this.color,
     Duration duration = const Duration(milliseconds: 500),
     Curve curve = Curves.linear,
   }) : super(
@@ -25,7 +27,7 @@ class _AnimatedCounterState extends AnimatedWidgetBaseState<AnimatedCounter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.teal,
+      color: widget.color,
       padding: const EdgeInsets.only(
         left: 24.0,
         right: 24.0,

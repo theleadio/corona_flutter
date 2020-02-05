@@ -64,14 +64,17 @@ class _CounterPageState extends State<CounterPage>
           ),
           CounterWrapper(
             title: 'Number Confirmed',
+            color: Colors.teal,
             number: widget.statsService.stats?.numConfirm ?? 0,
           ),
           CounterWrapper(
             title: 'Number Dead',
+            color: Color(0xFFB03060),
             number: widget.statsService.stats?.numDead ?? 0,
           ),
           CounterWrapper(
             title: 'Number Healed',
+            color: Color(0xFF5DBD4A),
             number: widget.statsService.stats?.numHeal ?? 0,
           ),
         ],
@@ -82,11 +85,13 @@ class _CounterPageState extends State<CounterPage>
 
 class CounterWrapper extends StatelessWidget {
   final String title;
+  final Color color;
   final int number;
 
   const CounterWrapper({
     Key key,
     this.title,
+    this.color = Colors.teal,
     this.number,
   }) : super(key: key);
 
@@ -109,6 +114,7 @@ class CounterWrapper extends StatelessWidget {
             ),
           ),
           AnimatedCounter(
+            color: color,
             number: number,
           ),
         ],
