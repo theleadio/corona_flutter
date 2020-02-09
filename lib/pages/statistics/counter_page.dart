@@ -73,9 +73,24 @@ class _CounterPageState extends State<CounterPage>
             number: widget.statsService.stats?.numDead ?? 0,
           ),
           CounterWrapper(
-            title: 'Number Healed',
+            title: 'Number Recovered',
             color: Color(0xFF5DBD4A),
             number: widget.statsService.stats?.numHeal ?? 0,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 24.0,
+              right: 24.0,
+              top: 36.0,
+            ),
+            child: Text(
+              'Source: WHO, CDC, ECDC, NHC of the PRC, JHU CSSE, DXY, QQ, and various international media',
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.black54,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
         ],
       ),

@@ -1,5 +1,4 @@
 import 'package:corona_flutter/core/stat.dart';
-import 'package:corona_flutter/pages/statistics/analytics_page.dart';
 import 'package:corona_flutter/pages/statistics/counter_page.dart';
 import 'package:corona_flutter/utils/helper.dart';
 import 'package:corona_flutter/widgets/web_view_wrapper.dart';
@@ -105,8 +104,9 @@ class _StatisticsPageState extends State<StatisticsPage>
             statsService: widget.statsService,
           ),
           ..._embededWebs.map(
-            (web) => AnalyticsPage(
-              url: web.url,
+            (web) => WebViewWrapper(
+              key: Key(web.title),
+              initialUrl: web.url,
             ),
           ),
         ],
