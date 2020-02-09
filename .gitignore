@@ -10,6 +10,7 @@
 .svn/
 *.g.dart
 .flutter-plugins-dependencies
+*.jks
 
 # IntelliJ related
 *.iml

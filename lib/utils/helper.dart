@@ -4,6 +4,7 @@ import 'package:corona_flutter/utils/constants.dart';
 import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart' as CustomTabs;
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -128,6 +129,18 @@ class Helper {
       );
     }
 
+    // Wrong flag for MY. Workaround until Flag library got it fixed
+    if (countryCode == "MY") {
+      String assetName = 'assets/img/' + countryCode.toLowerCase() + '.svg';
+      Widget svg = SvgPicture.asset(
+        assetName,
+        semanticsLabel: countryCode,
+        height: height,
+        width: width + 8.0,
+      );
+      return svg;
+    }
+
     return Flags.getMiniFlag(countryCode, width, height);
   }
 
@@ -136,8 +149,8 @@ class Helper {
     assert(countryCode != null);
 
     try {
-      String countryName = AppConstants.countriesList
-          .firstWhere((country) => country["code"] == countryCode)["name"];
+      String countryName = AppConstants.countriesList.firstWhere(
+          (country) => country["code"] == countryCode.toUpperCase())["name"];
 
       // return empty string if country code is 'GLOBAL', for API calling purpose.
       return countryName == 'GLOBAL' ? '' : countryName;

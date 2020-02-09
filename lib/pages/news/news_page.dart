@@ -25,6 +25,7 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   ScrollController newsFeedController;
   ScrollController appBarController;
+  bool _isScrolled = false;
 
   @override
   void initState() {
@@ -33,6 +34,10 @@ class _NewsPageState extends State<NewsPage> {
     appBarController = ScrollController();
     newsFeedController = ScrollController()
       ..addListener(() {
+        setState(() {
+          _isScrolled = newsFeedController.offset != 0;
+        });
+
         appBarController.jumpTo(newsFeedController.offset);
         if (newsFeedController.offset >=
                 newsFeedController.position.maxScrollExtent &&
@@ -77,63 +82,95 @@ class _NewsPageState extends State<NewsPage> {
     );
   }
 
+  _backtoTop() => newsFeedController.jumpTo(0.0);
+
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-      controller: appBarController,
-      headerSliverBuilder: (context, innerBoxIsScrolled) {
-        return [
-          SliverAppBar(
-            centerTitle: true,
-            title: Text(
-              '${widget.newsService.feedType == NewsFeedType.trending ? 'Trending' : 'Latest'} News',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontFamily: 'AbrilFatface',
-                color: Colors.black.withOpacity(0.75),
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            leading: IconButton(
-              icon: Icon(
-                AntIcons.search_outline,
-                color: Colors.black.withOpacity(0.75),
-              ),
-              onPressed: () {
-                showSearch(
-                  context: context,
-                  delegate: NewsSearchDelegate(),
-                );
-              },
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Helper.getFlagIcon(
-                  countryCode: widget.newsService.countryCode ?? 'GLOBAL',
-                  width: 24.0,
-                  height: null,
+    return Stack(
+      children: <Widget>[
+        NestedScrollView(
+          controller: appBarController,
+          headerSliverBuilder: (context, innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                centerTitle: true,
+                title: Text(
+                  'Verified News',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontFamily: 'AbrilFatface',
+                    color: Colors.black.withOpacity(0.75),
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
+                leading: IconButton(
+                  icon: Icon(
+                    AntIcons.search_outline,
+                    color: Colors.black.withOpacity(0.75),
+                  ),
+                  onPressed: () {
+                    showSearch(
+                      context: context,
+                      delegate: NewsSearchDelegate(),
+                    );
+                  },
+                ),
+                actions: <Widget>[
+                  IconButton(
+                    icon: Helper.getFlagIcon(
+                      countryCode: widget.newsService.countryCode ?? 'GLOBAL',
+                      width: 24.0,
+                      height: null,
+                    ),
+                    onPressed: () {
+                      Scaffold.of(context).openEndDrawer();
+                    },
+                  ),
+                ],
+                elevation: 0.0,
+                backgroundColor: Colors.grey[50],
+                floating: true,
               ),
-            ],
-            elevation: 0.0,
-            backgroundColor: Colors.grey[50],
-            floating: true,
+            ];
+          },
+          body: RefreshIndicator(
+            onRefresh: handleRefresh,
+            child: NewsFeed(
+              key: PageStorageKey('newsFeed'),
+              news: widget.newsService.news,
+              controller: newsFeedController,
+              onTap: onTap,
+              state: widget.newsService.state,
+            ),
           ),
-        ];
-      },
-      body: RefreshIndicator(
-        onRefresh: handleRefresh,
-        child: NewsFeed(
-          key: PageStorageKey('newsFeed'),
-          news: widget.newsService.news,
-          controller: newsFeedController,
-          onTap: onTap,
-          state: widget.newsService.state,
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24.0,
+            vertical: 16.0,
+          ),
+          child: Align(
+            alignment: Alignment.bottomRight,
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 200),
+              curve: Curves.easeOut,
+              transform: Matrix4.identity()
+                ..translate(
+                  0.0,
+                  _isScrolled ? 0.0 : 120.0,
+                  0.0,
+                ),
+              child: FloatingActionButton(
+                onPressed: _backtoTop,
+                elevation: 4.0,
+                child: Icon(
+                  Icons.keyboard_arrow_up,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -40,14 +40,10 @@ abstract class StatsCounter implements Built<StatsCounter, StatsCounterBuilder> 
   static Serializer<StatsCounter> get serializer => _$statsCounterSerializer;
 
   @nullable
-  int get country;
+  String get country;
 
   @BuiltValueField(wireName: 'num_confirm')
   int get numConfirm;
-
-  @nullable
-  @BuiltValueField(wireName: 'num_suspect')
-  int get numSuspect;
 
   @BuiltValueField(wireName: 'num_dead')
   int get numDead;
@@ -56,8 +52,8 @@ abstract class StatsCounter implements Built<StatsCounter, StatsCounterBuilder> 
   int get numHeal;
 
   @nullable
-  @BuiltValueField(wireName: 'posted_date')
-  String get postedDate;
+  @BuiltValueField(wireName: 'created')
+  String get created;
 
   factory StatsCounter([Function(StatsCounterBuilder) updates]) = _$StatsCounter;
   StatsCounter._();
