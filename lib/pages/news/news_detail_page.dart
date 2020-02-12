@@ -116,7 +116,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
                       child: Text(
-                        '${Helper.formatDate(widget.news.publishedAt)} / ${widget.news.author}',
+                        '${Helper.formatLongDate(widget.news.publishedAt)} / ${widget.news.author}',
                         style: TextStyle(
                           fontSize: 14.0,
                           color: Colors.black54,

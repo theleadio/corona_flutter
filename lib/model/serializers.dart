@@ -17,6 +17,7 @@ part 'serializers.g.dart';
   News,
   StatsCounter,
   Hospital,
+  TravelAlert,
 ])
 final Serializers serializers = _$serializers;
 

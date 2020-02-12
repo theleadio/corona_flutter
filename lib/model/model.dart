@@ -84,3 +84,15 @@ abstract class Hospital implements Built<Hospital, HospitalBuilder> {
   factory Hospital([Function(HospitalBuilder) updates]) = _$Hospital;
   Hospital._();
 }
+
+abstract class TravelAlert implements Built<TravelAlert, TravelAlertBuilder> {
+  static Serializer<TravelAlert> get serializer => _$travelAlertSerializer;
+
+  String get countryCode;
+  String get countryName;
+  String get publishedDate;
+  String get alertMessage;
+  
+  factory TravelAlert([Function(TravelAlertBuilder) updates]) = _$TravelAlert;
+  TravelAlert._();
+}

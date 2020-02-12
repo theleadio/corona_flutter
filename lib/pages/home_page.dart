@@ -120,12 +120,12 @@ class AppDrawer extends StatelessWidget {
           ),
           RadioToggleSection(
             title: 'Country',
-            valueToggles: AppConstants.countriesList
+            valueToggles: AppConstants.mainCountryCodesList
                 .map(
-                  (country) => ValueToggle(
-                    isSelected: country["code"] == settings.countryCode,
-                    title: country["name"],
-                    key: country["code"],
+                  (countryCode) => ValueToggle(
+                    isSelected: countryCode == settings.countryCode,
+                    title: Helper.getCountryName(countryCode),
+                    key: countryCode,
                   ),
                 )
                 .toList(),
