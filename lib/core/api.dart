@@ -12,6 +12,7 @@ abstract class ApiProvider {
   Future<List<News>> searchNews({String query, int offset});
   Future<StatsCounter> getStats({String countryCode});
   Future<List<Hospital>> getHospitals();
+  Future<List<TravelAlert>> getTravelAlerts();
 }
 
 enum NewsFeedType { trending, latest }
@@ -138,6 +139,21 @@ class RemoteRepository extends ApiProvider {
           hospitalDataMap['hospitalsAndHealthcareProviders'];
 
       return hospitalData.map((data) => deserialize<Hospital>(data)).toList();
+    } else {
+      return [];
+    }
+  }
+
+  /// Fetch all travel alerts from API endpoint.
+  Future<List<TravelAlert>> getTravelAlerts() async {
+    var endpoint = Uri.https(_baseUrl, "/v1/travel-alert", {});
+    final response = await client.get(endpoint);
+
+    if (response.statusCode == 200) {
+      final Iterable travelAlertsData = json.decode(response.body);
+      return travelAlertsData
+          .map((data) => deserialize<TravelAlert>(data))
+          .toList();
     } else {
       return [];
     }

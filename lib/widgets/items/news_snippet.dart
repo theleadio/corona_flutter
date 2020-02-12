@@ -55,7 +55,7 @@ class NewsSnippet extends StatelessWidget {
                       const SizedBox(height: 8.0),
                       timestamp != ''
                           ? Text(
-                              Helper.formatDate(timestamp),
+                              Helper.formatLongDate(timestamp),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(

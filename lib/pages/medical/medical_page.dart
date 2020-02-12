@@ -1,6 +1,8 @@
 import 'package:corona_flutter/core/hospital.dart';
+import 'package:corona_flutter/core/travel_alert.dart';
 import 'package:corona_flutter/pages/medical/hospital_page.dart';
 import 'package:corona_flutter/pages/medical/sources_page.dart';
+import 'package:corona_flutter/pages/medical/travel_alert_page.dart';
 import 'package:corona_flutter/widgets/web_view_wrapper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,7 @@ class _MedicalPageState extends State<MedicalPage>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: _embededWebs.length + 2);
+    _controller = TabController(vsync: this, length: _embededWebs.length + 3);
   }
 
   @override
@@ -67,6 +69,7 @@ class _MedicalPageState extends State<MedicalPage>
               ),
               tabs: [
                 Tab(text: 'Hospitals'),
+                Tab(text: 'Travel Alerts'),
                 ..._embededWebs
                     .map(
                       (web) => Tab(
@@ -90,6 +93,11 @@ class _MedicalPageState extends State<MedicalPage>
           Consumer<HospitalsService>(
             builder: (context, hospitalsService, _) => HospitalPage(
               hospitalsService: hospitalsService,
+            ),
+          ),
+          Consumer<TravelAlertsService>(
+            builder: (context, travelAlertsService, _) => TravelAlertPage(
+              travelAlertsService: travelAlertsService,
             ),
           ),
           ..._embededWebs

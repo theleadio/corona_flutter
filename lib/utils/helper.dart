@@ -71,8 +71,13 @@ class Helper {
   }
 
   /// Format timestamp into readable format.
-  static String formatDate(String timestamp) {
+  static String formatLongDate(String timestamp) {
     return DateFormat.yMMMEd().add_jm().format(DateTime.parse(timestamp));
+  }
+
+  /// Format timestamp into readable format.
+  static String formatShortDate(String timestamp) {
+    return DateFormat.yMMMd().format(DateTime.parse(timestamp));
   }
 
   /// Map [NewsFeedType] enum into readable [String].
@@ -149,7 +154,7 @@ class Helper {
     assert(countryCode != null);
 
     try {
-      String countryName = AppConstants.countriesList.firstWhere(
+      String countryName = AppConstants.fullCountriesList.firstWhere(
           (country) => country["code"] == countryCode.toUpperCase())["name"];
 
       // return empty string if country code is 'GLOBAL', for API calling purpose.

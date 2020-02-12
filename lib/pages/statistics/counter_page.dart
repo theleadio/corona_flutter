@@ -63,19 +63,19 @@ class _CounterPageState extends State<CounterPage>
             ),
           ),
           CounterWrapper(
-            title: 'Number Confirmed',
-            color: Colors.teal,
+            title: 'Total Confirmed',
+            color: Color(0xFFB03060),
             number: widget.statsService.stats?.numConfirm ?? 0,
           ),
           CounterWrapper(
-            title: 'Number Dead',
-            color: Color(0xFFB03060),
-            number: widget.statsService.stats?.numDead ?? 0,
-          ),
-          CounterWrapper(
-            title: 'Number Recovered',
+            title: 'Total Recovered',
             color: Color(0xFF5DBD4A),
             number: widget.statsService.stats?.numHeal ?? 0,
+          ),
+          CounterWrapper(
+            title: 'Total Deaths',
+            color: Colors.grey[700],
+            number: widget.statsService.stats?.numDead ?? 0,
           ),
           Padding(
             padding: const EdgeInsets.only(
