@@ -45,55 +45,61 @@ class _StatisticsPageState extends State<StatisticsPage>
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
-          SliverAppBar(
-            centerTitle: true,
-            title: Text(
-              'Statistics',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontFamily: 'AbrilFatface',
-                color: Colors.black.withOpacity(0.75),
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            bottom: TabBar(
-              controller: _controller,
-              isScrollable: false,
-              indicatorWeight: 4.0,
-              labelColor: Colors.black.withOpacity(0.75),
-              labelStyle: TextStyle(
-                fontSize: 18.0,
-                fontFamily: 'HKGrotesk',
-                fontWeight: FontWeight.w700,
-              ),
-              tabs: [
-                Tab(text: 'Counter'),
-                ..._embededWebs
-                    .map(
-                      (web) => Tab(
-                        text: web.title,
-                      ),
-                    )
-                    .toList(),
-              ],
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Helper.getFlagIcon(
-                  countryCode: widget.statsService.countryCode ?? 'GLOBAL',
-                  width: 24.0,
-                  height: null,
-                  color: Colors.black.withOpacity(0.75),
+          SliverOverlapAbsorber(
+            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+            child: SliverSafeArea(
+              top: false,
+              sliver: SliverAppBar(
+                centerTitle: true,
+                title: Text(
+                  'Statistics',
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontFamily: 'AbrilFatface',
+                    color: Colors.black.withOpacity(0.75),
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
+                bottom: TabBar(
+                  controller: _controller,
+                  isScrollable: false,
+                  indicatorWeight: 4.0,
+                  labelColor: Colors.black.withOpacity(0.75),
+                  labelStyle: TextStyle(
+                    fontSize: 18.0,
+                    fontFamily: 'HKGrotesk',
+                    fontWeight: FontWeight.w700,
+                  ),
+                  tabs: [
+                    Tab(text: 'Counter'),
+                    ..._embededWebs
+                        .map(
+                          (web) => Tab(
+                            text: web.title,
+                          ),
+                        )
+                        .toList(),
+                  ],
+                ),
+                actions: <Widget>[
+                  IconButton(
+                    icon: Helper.getFlagIcon(
+                      countryCode: widget.statsService.countryCode ?? 'GLOBAL',
+                      width: 24.0,
+                      height: null,
+                      color: Colors.black.withOpacity(0.75),
+                    ),
+                    onPressed: () {
+                      Scaffold.of(context).openEndDrawer();
+                    },
+                  ),
+                ],
+                elevation: 2.0,
+                backgroundColor: Colors.grey[50],
+                pinned: true,
+                forceElevated: true,
               ),
-            ],
-            elevation: 2.0,
-            backgroundColor: Colors.grey[50],
-            pinned: true,
-            forceElevated: true,
+            ),
           ),
         ];
       },
