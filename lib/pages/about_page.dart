@@ -178,72 +178,76 @@ class DeveloperSnippet extends StatelessWidget {
         SizedBox(
           width: 12.0,
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              name,
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                fontSize: 18.0,
-                color: Colors.black.withOpacity(0.75),
-                fontWeight: FontWeight.w700,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                name,
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  color: Colors.black.withOpacity(0.75),
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
-            Text(
-              position,
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                fontSize: 14.0,
-                color: Colors.black.withOpacity(0.75),
-                fontWeight: FontWeight.w600,
+              Text(
+                position,
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.black.withOpacity(0.75),
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            Row(
-              children: <Widget>[
-                linkedInUrl.length <= 0
-                    ? Container()
-                    : IconButton(
-                        icon: Icon(
-                          AntIcons.linkedin,
-                          color: Colors.black.withOpacity(0.75),
+              Row(
+                children: <Widget>[
+                  linkedInUrl.length <= 0
+                      ? Container()
+                      : IconButton(
+                          icon: Icon(
+                            AntIcons.linkedin,
+                            color: Colors.black.withOpacity(0.75),
+                          ),
+                          iconSize: 36.0,
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            Helper.openWebUrl(
+                                context: context, url: linkedInUrl);
+                          },
                         ),
-                        iconSize: 36.0,
-                        padding: EdgeInsets.zero,
-                        onPressed: () {
-                          Helper.openWebUrl(context: context, url: linkedInUrl);
-                        },
-                      ),
-                twitterUrl.length <= 0
-                    ? Container()
-                    : IconButton(
-                        icon: Icon(
-                          AntIcons.twitter_square,
-                          color: Colors.black.withOpacity(0.75),
+                  twitterUrl.length <= 0
+                      ? Container()
+                      : IconButton(
+                          icon: Icon(
+                            AntIcons.twitter_square,
+                            color: Colors.black.withOpacity(0.75),
+                          ),
+                          iconSize: 36.0,
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            Helper.openWebUrl(
+                                context: context, url: twitterUrl);
+                          },
                         ),
-                        iconSize: 36.0,
-                        padding: EdgeInsets.zero,
-                        onPressed: () {
-                          Helper.openWebUrl(context: context, url: twitterUrl);
-                        },
-                      ),
-                mediumUrl.length <= 0
-                    ? Container()
-                    : IconButton(
-                        icon: Icon(
-                          AntIcons.medium,
-                          color: Colors.black.withOpacity(0.75),
+                  mediumUrl.length <= 0
+                      ? Container()
+                      : IconButton(
+                          icon: Icon(
+                            AntIcons.medium,
+                            color: Colors.black.withOpacity(0.75),
+                          ),
+                          iconSize: 36.0,
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            Helper.openWebUrl(context: context, url: mediumUrl);
+                          },
                         ),
-                        iconSize: 36.0,
-                        padding: EdgeInsets.zero,
-                        onPressed: () {
-                          Helper.openWebUrl(context: context, url: mediumUrl);
-                        },
-                      ),
-              ],
-            ),
-            SizedBox(height: 8.0),
-          ],
+                ],
+              ),
+              SizedBox(height: 8.0),
+            ],
+          ),
         ),
       ],
     );
@@ -299,6 +303,38 @@ class Developer {
       twitterUrl: 'https://twitter.com/lvlzeros',
       mediumUrl: 'https://medium.com/@lvlzeros',
       pathToImage: 'assets/img/shian.webp',
+    ),
+    Developer(
+      name: 'Dominic Ligot',
+      position: 'Lead Analyst',
+      linkedInUrl: 'https://www.linkedin.com/in/docligot/',
+      twitterUrl: '',
+      mediumUrl: '',
+      pathToImage: 'assets/img/dominic.webp',
+    ),
+    Developer(
+      name: 'Ummi Hasanah Zaidon',
+      position: 'Head of Public Relation',
+      linkedInUrl: 'https://www.linkedin.com/in/ummi-hasanah-zaidon-32148280/',
+      twitterUrl: '',
+      mediumUrl: '',
+      pathToImage: 'assets/img/ummi.webp',
+    ),
+    Developer(
+      name: 'Marcus Chia',
+      position: 'Head of Product',
+      linkedInUrl: 'https://www.linkedin.com/in/marcuschiam5/',
+      twitterUrl: '',
+      mediumUrl: '',
+      pathToImage: 'assets/img/marcus.webp',
+    ),
+    Developer(
+      name: 'Assistant Professor Dr. Fairoza Amira Binti Hamzah',
+      position: 'Lead Researcher',
+      linkedInUrl: 'https://www.linkedin.com/in/fairoza-amira-binti-hamzah/',
+      twitterUrl: '',
+      mediumUrl: '',
+      pathToImage: 'assets/img/fairoza.webp',
     ),
   ];
 }
